@@ -3,12 +3,12 @@
 
 =head1 NAME
 
-  Math::BaseCnv - fast functions to convert between number bases
+Math::BaseCnv - fast functions to convert between number bases
 
 =head1 VERSION
 
-  This documention refers to version 1.0.3CB7M43 of 
-    Math::BaseCnv, which was released on Thu Dec 11 07:22:04:03 2003.
+  This documention refers to version 1.0.3CCA5Mi of 
+    Math::BaseCnv, which was released on Fri Dec 12 10:05:22:44 2003.
 
 =head1 SYNOPSIS
 
@@ -169,6 +169,10 @@
 
 =over 4
 
+=item - 1.0.3CCA5Mi  Fri Dec 12 10:05:22:44 2003
+
+  * removed indenting from POD NAME field
+
 =item - 1.0.3CB7M43  Thu Dec 11 07:22:04:03 2003
 
   * updated package to coincide with Time::Fields release
@@ -224,7 +228,7 @@ our %EXPORT_TAGS = ( 'all' => [ qw(cnv dec hex b10 b64 dig diginit) ],
                      'hex' => [ qw(    dec hex                    ) ],
                      'b64' => [ qw(cnv         b10 b64            ) ],
                      'dig' => [ qw(                    dig diginit) ] );
-our $VERSION     = '1.0.3CB7M43'; # major . minor . PipTimeStamp
+our $VERSION     = '1.0.3CCA5Mi'; # major . minor . PipTimeStamp
 our $PTVR        = $VERSION; $PTVR =~ s/^\d+\.\d+\.//; # strip major && minor
 # See http://Ax9.org/pt?$PTVR && `perldoc Time::PT`
 
