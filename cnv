@@ -1,0 +1,25 @@
+#!/usr/bin/perl -w
+# 315EHVb - cnv (CoNVert number bases) <number> <fromBase> <toBase>
+#  If you only supply a number, it will convert to hex if it's decimal &&
+#    decimal if it contains only valid hex digits.  If you just provide one
+#    base parameter, it assumes that your number is already base10 && that
+#    you've supplied the toBase.  Otherwise, you need from && to parameters.
+#  Examples:    `cnv 127   10 16` == "7F"
+#               `cnv 7F    16 3`  == "11201"
+#               `cnv 11201 3  7`  == "241"
+#               `cnv 241   7  10` == "127"
+# Eror checking is minimal.
+# All source code should be free!  Code I have authority over is && shall be!
+#   I license this code under the GNU General Public License (version 2).
+#   Please consult the Free Software Foundation (fsf.org) for important 
+#   information about your freedom.  Thank you.  TTFN.
+#                                           -Pip@CPAN.org
+
+use strict;
+use Math::BaseCnv;
+
+my $numb = shift; 
+if(!defined($numb) || $numb =~ /^-+[h\?]/i) {
+  die("USAGE: \`cnv number frombass tobass\`\n");
+}
+print(cnv($numb, shift, shift));
