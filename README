@@ -7,8 +7,8 @@ Math::BaseCnv - fast functions to convert between number bases
 
 VERSION
 
-This documentation refers to version 1.0.428LV46 of 
-Math::BaseCnv, which was released on Sun Feb  8 21:31:04:06 2004.
+This documentation refers to version 1.0.42REDir of 
+Math::BaseCnv, which was released on Fri Feb 27 14:13:44:53 2004.
 
 SYNOPSIS
 
@@ -50,15 +50,14 @@ USAGE
 
 cnv($numb[,$from[,$tobs]])
 
-Convert the number contained in $numb 
-from its current number base ($from) into the result number base
-($tobs).  If only $numb is provided, it will be converted to
-hexadecimal (base 16) if it only contains valid decimal digits or
-it will be converted to decimal (base 10) if it contains 
-hexadecimal digits or begins with '0x'.  If only $numb and $from are
-provided as parameters, cnv assumes that $numb is already in 
-decimal format and uses $from as the $tobs.  The normal (and most 
-clear) usage is to provide all 3 parameters.
+Convert the number contained in $numb from its current number base
+($from) into the result number base ($tobs). If only $numb is provided,
+it will be converted to hexadecimal (base 16) if it only contains valid
+decimal digits or it will be converted to decimal (base 10) if it
+contains hexadecimal digits or begins with '0x'. If only $numb and $from
+are provided as parameters, cnv assumes that $numb is already in decimal
+format and uses $from as the $tobs. The normal (and most clear) usage is
+to provide all 3 parameters.
 
 cnv() is the only function that is exported from a normal 
 use Math::BaseCnv;' command.  Other functions can be imported
@@ -168,6 +167,10 @@ me any suggestions or coding tips or notes of appreciation
 CHANGES
 
 Revision history for Perl extension Math::BaseCnv:
+
+- 1.0.42REDir  Fri Feb 27 14:13:44:53 2004
+
+* changed test.pl to hopefully pass MSWin32-x86-multi-thread
 
 - 1.0.428LV46  Sun Feb  8 21:31:04:06 2004
 

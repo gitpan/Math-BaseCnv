@@ -92,8 +92,9 @@ $result = cnv(13542, scalar( dig() ));
 &report($result eq 'kaka', "$result\n");
 
 dig( [ qw( n a c h o z   y u m ) ] );
-$result = cnv(lc('MunchYummyNachoChz'), 9, 10);
-&report($result eq '1.46443919598918e+17', "$result\n");
+$result = cnv(lc('MunchYummyNachoChz'), 9, 10) / (10**17);
+$result = substr($result, 0, 10);
+&report($result eq '1.46443919', "$result\n");
 
 # Test large numbers && dec/hex functions
 #$calc->digits('hex');
@@ -120,8 +121,9 @@ diginit();
 $result = b64(1234567890); # 10 base10 digits is only 6 bass64 digits
 &report($result eq '19bWBI', "$result\n");
 
-$result = b10('TheBootyBoys.com'); # Around The Corner =)
-&report($result eq '3.6744147055401e+28', "$result\n");
+$result = b10('TheBootyBoys.com') / (10**28); # Around The Corner =)
+$result = substr($result, 0, 10);
+&report($result eq '3.67441470', "$result\n");
 
 $result = b10( b64( 127 ) );
 &report($result eq '127', "$result\n");

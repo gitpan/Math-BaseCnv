@@ -7,8 +7,8 @@ Math::BaseCnv - fast functions to convert between number bases
 
 =head1 VERSION
 
-This documentation refers to version 1.0.428LV46 of 
-Math::BaseCnv, which was released on Sun Feb  8 21:31:04:06 2004.
+This documentation refers to version 1.0.42REDir of 
+Math::BaseCnv, which was released on Fri Feb 27 14:13:44:53 2004.
 
 =head1 SYNOPSIS
 
@@ -54,15 +54,14 @@ I'm totally addicted to bass!
 
 =head2 cnv($numb[,$from[,$tobs]])
 
-Convert the number contained in $numb 
-from its current number base ($from) into the result number base
-($tobs).  If only $numb is provided, it will be converted to
-hexadecimal (base 16) if it only contains valid decimal digits or
-it will be converted to decimal (base 10) if it contains 
-hexadecimal digits or begins with '0x'.  If only $numb and $from are
-provided as parameters, cnv assumes that $numb is already in 
-decimal format and uses $from as the $tobs.  The normal (and most 
-clear) usage is to provide all 3 parameters.
+Convert the number contained in $numb from its current number base
+($from) into the result number base ($tobs). If only $numb is provided,
+it will be converted to hexadecimal (base 16) if it only contains valid
+decimal digits or it will be converted to decimal (base 10) if it
+contains hexadecimal digits or begins with '0x'. If only $numb and $from
+are provided as parameters, cnv assumes that $numb is already in decimal
+format and uses $from as the $tobs. The normal (and most clear) usage is
+to provide all 3 parameters.
 
 cnv() is the only function that is exported from a normal 
 use Math::BaseCnv;' command.  Other functions can be imported
@@ -175,6 +174,10 @@ Revision history for Perl extension Math::BaseCnv:
 
 =over 4
 
+=item - 1.0.42REDir  Fri Feb 27 14:13:44:53 2004
+
+* changed test.pl to hopefully pass MSWin32-x86-multi-thread
+
 =item - 1.0.428LV46  Sun Feb  8 21:31:04:06 2004
 
 * broke apart CHANGES to descend chronologically
@@ -271,7 +274,7 @@ our %EXPORT_TAGS = ( 'all' => [ qw(cnv dec hex b10 b64 dig diginit) ],
                      'hex' => [ qw(    dec hex                    ) ],
                      'b64' => [ qw(cnv         b10 b64            ) ],
                      'dig' => [ qw(                    dig diginit) ] );
-our $VERSION     = '1.0.428LV46'; # major . minor . PipTimeStamp
+our $VERSION     = '1.0.42REDir'; # major . minor . PipTimeStamp
 our $PTVR        = $VERSION; $PTVR =~ s/^\d+\.\d+\.//; # strip major and minor
 # See http://Ax9.Org/pt?$PTVR and `perldoc Time::PT`
 
