@@ -1,3 +1,4 @@
+!/usr/bin/perl -w
  3159mLT - Math::BaseCnv.pm created by Pip@CPAN.Org to convert between 
    arbitrary number bases.  I'm totally addicted to bass!
 
@@ -7,8 +8,8 @@ Math::BaseCnv - fast functions to convert between number bases
 
 VERSION
 
-This documentation refers to version 1.2.45UC8fo of 
-Math::BaseCnv, which was released on Sun May 30 12:08:41:50 2004.
+This documentation refers to version 1.2.4CCJFl7 of 
+Math::BaseCnv, which was released on Sun Dec 12 19:15:47:07 2004.
 
 SYNOPSIS
 
@@ -24,7 +25,7 @@ arbitrary number bases.  It is as fast as I currently know how to
 make it (of course relying only on the lovely Perl).  If you 
 would rather utilize an object syntax for number-base conversion, 
 please see Ken Williams's <ken@forum.swarthmore.edu> fine 
-Math::BaseCalc module.
+L<Math::BaseCalc> module.
 
 2DO
 
@@ -38,12 +39,12 @@ Math::BaseCalc module.
 WHY?
 
 The reason I created BaseCnv was that I needed a simple way to 
-convert quickly between the 3 number bases I use most (10, 16, and 
+convert quickly between the 3 number bases I use most (10, 16, &&
 64).  It turned out that it was trivial to handle any number base 
 that could be represented as characters.  High-bit ASCII proved 
 somewhat problemmatic but at least BaseCnv can convert between any
-possible base between 2 and 128 which is much more than I originally
-needed.  I'm quite happy with it and employ b64() too much now =).
+possible base between 2 && 128 which is much more than I originally
+needed.  I'm quite happy with it && employ b64() too much now =).
 I'm totally addicted to bass!  Sometimes I intentionally misspell
 'base' as 'bass' because I'm a dork who likes bass in my face.
 
@@ -62,14 +63,14 @@ converted to hexadecimal (base 16).
 If $numb only contains valid hexadecimal (base 16) digits or begins
 with '0x', it will be it will be converted to decimal (base 10).
 
-B<When only $numb and $from are provided as parameters:>
+B<When only $numb && $from are provided as parameters:>
 
-cnv() assumes that $numb is already in decimal format and uses $from
+cnv() assumes that $numb is already in decimal format && uses $from
 as the $tobs.
 
 B<When all three parameters are provided:>
 
-The normal (and most clear) usage of cnv() is to provide all three
+The normal (&& most clear) usage of cnv() is to provide all three
 parameters where $numb is converted from $from base to $tobs.
 
 cnv() is the only function that is exported from a normal 
@@ -77,10 +78,10 @@ cnv() is the only function that is exported from a normal
 to local namespaces explicitly or with the following tags:
 
     :all - every function described here
-    :hex - only dec() and hex()
-    :b64 - only b10() and b64() and cnv()
-    :dig - only dig() and diginit()
-    :sfc - only summ(), fact(), and choo()
+    :hex - only dec() && hex()
+    :b64 - only b10() && b64() && cnv()
+    :dig - only dig() && diginit()
+    :sfc - only summ(), fact(), && choo()
 
 b10($b64n)
 
@@ -124,7 +125,7 @@ If no \@newd list or digit set name is provided as a parameter,
 dig() returns the current character list.  It's fine to have many
 more characters in your current digit set than will be used with
 your conversions (eg. using dig('128') works fine for any cnv()
-call with $from and $tobs params less than or equal to 128).
+call with $from && $tobs params less than or equal to 128).
 
 An example of a \@newd parameter for a specified alternate digit 
 set for base 9 conversions is:
@@ -151,30 +152,30 @@ A simple function to calculate a memoized function of $ennn choose $emmm.
 
 NOTES
 
-The Perl builtin hex() function takes a hex string as a parameter and 
-returns the decimal value (FromBase = 16, ToBase = 10) but this 
+The Perl builtin hex() function takes a hex string as a parameter &&
+returns the decimal value (FromBase = 16, ToBase = 10) but this
 notation seems counter-intuitive to me since a simple reading of the
 code suggests that a hex() function will turn your parameter into
 hexadecimal (ie. It sounds like Perl's hex() will hexify your parameter
 but it does not.) so I've decided (maybe foolishly) to invert the
 notation for my similar functions since it makes more sense to me this
-way and will be easier to remember (I've had to lookup hex() in the
+way && will be easier to remember (I've had to lookup hex() in the
 Camel book many times already which was part of the impetus for this
 module...  as well as the gut reaction that sprintf() is not a proper
 natural inverse function for hex()).
 
 This means that my b64() function takes a decimal number as a 
-parameter and returns the base64 equivalent (FromBase = 10, ToBase =
-64) and my b10() function takes a base64 number (string) and returns 
+parameter && returns the base64 equivalent (FromBase = 10, ToBase =
+64) && my b10() function takes a base64 number (string) && returns
 the decimal value (FromBase = 64, ToBase = 10).  My hex() function 
 overloads Perl's builtin version with this opposite behavior so my 
 dec() function behaves like Perl's normal hex() function.  I know 
-it's confusing and maybe bad form of me to do this but I like it 
+it's confusing && maybe bad form of me to do this but I like it 
 so much better this way that I'd rather go against the grain.
 
-Please think of my dec() and hex() functions as meaning decify and 
+Please think of my dec() && hex() functions as meaning decify &&
 hexify.  Also the pronunciation of dec() is 'dess' (!'deck' which
-would be the inverse of 'ink' which -- and ++ already do so well).
+would be the inverse of 'ink' which -- && ++ already do so well).
 After reading the informative Perl module etiquette guidelines, I now
 appreciate the need to export as little as is necessary by default.  
 So to be responsible, I have limited BaseCnv exporting to only 
@@ -190,7 +191,7 @@ This module does not handle fractional number inputs because I like
 using the dot (.) character as a standard base64 digit since it 
 makes for clean filenames.
 
-summ(), fact(), and choo() are general Math function utilities which
+summ(), fact(), && choo() are general Math function utilities which
 are unrelated to number-base conversion but I didn't feel like making
 another separate module just for them so they snuck in here.
 
@@ -201,6 +202,12 @@ me any suggestions or coding tips or notes of appreciation
 CHANGES
 
 Revision history for Perl extension Math::BaseCnv:
+
+- 1.2.4CCJFl7  Sun Dec 12 19:15:47:07 2004
+
+* made only bin/cnv executable to go into EXE_FILES
+
+* made Math::BaseCalc a link in pod && updated License
 
 - 1.2.45UC8fo  Sun May 30 12:08:41:50 2004
 
@@ -240,7 +247,7 @@ Revision history for Perl extension Math::BaseCnv:
 
 - 1.0.3CG3dIx  Tue Dec 16 03:39:18:59 2003
 
-* normalized base spelling and other eccentricities
+* normalized base spelling
 
 - 1.0.3CD1Vdd  Sat Dec 13 01:31:39:39 2003
 
@@ -268,7 +275,7 @@ Revision history for Perl extension Math::BaseCnv:
 
 - 1.0.37SLNGN  Mon Jul 28 21:23:16:23 2003
 
-* first version (and my first Perl module... yay!) put on CPAN
+* first version (&& my first Perl module... yay!) put on CPAN
 
 - 1.0.37JKj3w  Sat Jul 19 20:45:03:58 2003
 
@@ -284,18 +291,19 @@ Please run:
 
     `perl -MCPAN -e "install Math::BaseCnv"`
 
-or uncompress the package and run the standard:
+or uncompress the package && run the standard:
 
     `perl Makefile.PL; make; make test; make install`
 
 LICENSE
 
 Most source code should be Free!
-  Code I have lawful authority over is and shall be!
-Copyright: (c) 2003, Pip Stuart.  All rights reserved.
-Copyleft :  I license this software under the GNU General Public 
-  License (version 2).  Please consult the Free Software Foundation 
-  (http://www.fsf.org) for important information about your freedom.
+  Code I have lawful authority over is && shall be!
+Copyright: (c) 2003-2004, Pip Stuart.
+Copyleft :  This software is licensed under the GNU General Public
+  License (version 2), && as such comes with NO WARRANTY.  Please
+  consult the Free Software Foundation (http://FSF.Org) for
+  important information about your freedom.
 
 AUTHOR
 
