@@ -7,214 +7,199 @@ Math::BaseCnv - fast functions to convert between number bases
 
 =head1 VERSION
 
-  This documention refers to version 1.0.3CCA5Mi of 
-    Math::BaseCnv, which was released on Fri Dec 12 10:05:22:44 2003.
+This documention refers to version 1.0.3CD1Vdd of 
+Math::BaseCnv, which was released on Sat Dec 13 01:31:39:39 2003.
 
 =head1 SYNOPSIS
 
   use Math::BaseCnv;
-  @numb = (  0, 2,  7, 42, 55, 57, 99, 127 );
-  @cycl = ( 10, 2, 64,  7, 10 );
-  print("Format: FromBass -> ToBass = ConvertedNumber\n");
-  foreach $n (@numb) {
-    printf("%-3d:", $n);
-    for($i = 1; $i < @cycl; $i++) {
-      $n = cnv($n, $cycl[$i - 1], $cycl[$i]);
-      printf("%3d->%-3d=%-7s", $cycl[$i - 1], $cycl[$i], $n);
-    }
-    print("\n");
-  }
 
-       -- execution output:
-  Format: FromBass -> ToBass = ConvertedNumber
-  0  : 10->2  =0        2->64 =0       64->7  =0        7->10 =0  
-  2  : 10->2  =10       2->64 =2       64->7  =2        7->10 =2  
-  7  : 10->2  =111      2->64 =7       64->7  =10       7->10 =7  
-  42 : 10->2  =101010   2->64 =g       64->7  =60       7->10 =42 
-  55 : 10->2  =110111   2->64 =t       64->7  =106      7->10 =55 
-  57 : 10->2  =111001   2->64 =v       64->7  =111      7->10 =57 
-  99 : 10->2  =1100011  2->64 =1Z      64->7  =201      7->10 =99 
-  127: 10->2  =1111111  2->64 =1_      64->7  =241      7->10 =127
+  # Convert 55 from base-10 (decimal) to base-2 (binary)
+  $binary_55 = cnv( 55, 10, 2 ); 
 
 =head1 DESCRIPTION
 
-  BaseCnv provides a few simple functions for converting between 
-    arbitrary number bases.  It is as fast as I currently know how to 
-    make it (of course relying only on the lovely perl).  If you 
-    would rather utilize an object syntax for number-bass conversion, 
-    please see Ken Williams's <ken@forum.swarthmore.edu> fine 
-    Math::BaseCalc module.
+BaseCnv provides a few simple functions for converting between 
+arbitrary number bases.  It is as fast as I currently know how to 
+make it (of course relying only on the lovely perl).  If you 
+would rather utilize an object syntax for number-bass conversion, 
+please see Ken Williams's <ken@forum.swarthmore.edu> fine 
+Math::BaseCalc module.
 
 =head1 2DO
 
-  better error checking
-  handle fractional parts? umm but I like using '.' as a b64 char =(
-        What else does BaseCnv need?
+better error checking
+handle fractional parts? umm but I like using '.' as a b64 char =(
+      What else does BaseCnv need?
 
 =head1 WHY?
 
-  The reason I created BaseCnv was that I needed a simple way to 
-    convert quickly between the 3 number bases I use most (10, 16, && 
-    64).  It turned out that it was trivial to handle any number bass 
-    that could be represented as characters.  High-bit ASCII proved 
-    somewhat problemmatic but at least BaseCnv can convert between any
-    possible bass between 2 && 128 which is more than I originally 
-    needed.  I'm quite happy with it && employ b64() too much now =).
+The reason I created BaseCnv was that I needed a simple way to 
+convert quickly between the 3 number bases I use most (10, 16, && 
+64).  It turned out that it was trivial to handle any number bass 
+that could be represented as characters.  High-bit ASCII proved 
+somewhat problemmatic but at least BaseCnv can convert between any
+possible bass between 2 && 128 which is more than I originally 
+needed.  I'm quite happy with it && employ b64() too much now =).
 
 =head1 USAGE
 
-  cnv($numb[,$from[,$tobs]]) - Convert the number contained in $numb 
-    from its current number bass ($from) into the result number bass
-    ($tobs).  If only $numb is provided, it will be converted to
-    hexadecimal (bass 16) if it only contains valid decimal digits or
-    it will be converted to decimal (bass 10) if it contains 
-    hexadecimal digits or begins with '0x'.  If only $numb && $from are
-    provided as parameters, cnv assumes that $numb is already in 
-    decimal format && uses $from as the $tobs.  The normal (&& most 
-    clear) usage is to provide all 3 parameters.
+cnv($numb[,$from[,$tobs]]) - Convert the number contained in $numb 
+  from its current number bass ($from) into the result number bass
+  ($tobs).  If only $numb is provided, it will be converted to
+  hexadecimal (bass 16) if it only contains valid decimal digits or
+  it will be converted to decimal (bass 10) if it contains 
+  hexadecimal digits or begins with '0x'.  If only $numb && $from are
+  provided as parameters, cnv assumes that $numb is already in 
+  decimal format && uses $from as the $tobs.  The normal (&& most 
+  clear) usage is to provide all 3 parameters.
 
-    cnv() is the only function that is exported from a normal 
-      'use Math::BaseCnv;' command.  Other functions can be imported
-      to local namespaces explicitly or with the following tags:
-        :all - every function described here
-        :hex - only dec() && hex()
-        :b64 - only b10() && b64() && cnv()
-        :dig - only dig() && diginit()
+  cnv() is the only function that is exported from a normal 
+    'use Math::BaseCnv;' command.  Other functions can be imported
+    to local namespaces explicitly or with the following tags:
+      :all - every function described here
+      :hex - only dec() && hex()
+      :b64 - only b10() && b64() && cnv()
+      :dig - only dig() && diginit()
 
-  b10($b64n) - A shortcut to convert the number given as a parameter 
-    ($b64n) from bass 64 to decimal (bass 10).
+b10($b64n) - A shortcut to convert the number given as a parameter 
+   ($b64n) from bass 64 to decimal (bass 10).
 
-  b64($b10n) - A shortcut to convert the number given as a parameter 
-    ($b10n) from decimal (bass 10) to bass 64.
+b64($b10n) - A shortcut to convert the number given as a parameter 
+   ($b10n) from decimal (bass 10) to bass 64.
 
-  dec($b16n) - A shortcut to convert the number given as a parameter 
-    ($b16n) from hexadecimal (bass 16) to decimal (bass 10).
+dec($b16n) - A shortcut to convert the number given as a parameter 
+   ($b16n) from hexadecimal (bass 16) to decimal (bass 10).
 
-  hex($b10n) - A shortcut to convert the number given as a parameter 
-    ($b10n) from decimal (bass 10) to hexadecimal (bass 16).
+hex($b10n) - A shortcut to convert the number given as a parameter 
+   ($b10n) from decimal (bass 10) to hexadecimal (bass 16).
 
-  dig(\@newd) - Assign the new digit character list to be used in 
-    place of the default one.  dig() can also alternately accept a 
-    string name matching one of the following predefined digit sets:
-      'bin' => ['0', '1']
-      'oct' => ['0'..'7']
-      'dec' => ['0'..'9']
-      'hex' => ['0'..'9', 'a'..'f']
-      'HEX' => ['0'..'9', 'A'..'F']
-      'b62' => ['0'..'9', 'a'..'z', 'A'..'Z']
-      '64'  => ['A'..'Z', 'a'..'z', '0'..'9', '+', '/'] # MIME::Base64
-      'b64' => ['0'..'9', 'A'..'Z', 'a'..'z', '.', '_'] 
-      '128' => ['0'..'9', 'A'..'Z', 'a'..'z', '.', '_'... higher chars
-    If no \@newd list or digit set name is provided as a parameter, 
-    dig() returns the current character list.  It's fine to have many
-    more characters in your current digit set than will be used with
-    your conversions (eg. using dig('128') works fine for any cnv()
-    call with $from && $tobs params less than or equal to 128).
+dig(\@newd) - Assign the new digit character list to be used in 
+  place of the default one.  dig() can also alternately accept a 
+  string name matching one of the following predefined digit sets:
+    'bin' => ['0', '1']
+    'oct' => ['0'..'7']
+    'dec' => ['0'..'9']
+    'hex' => ['0'..'9', 'a'..'f']
+    'HEX' => ['0'..'9', 'A'..'F']
+    'b62' => ['0'..'9', 'a'..'z', 'A'..'Z']
+    '64'  => ['A'..'Z', 'a'..'z', '0'..'9', '+', '/'] # MIME::Base64
+    'b64' => ['0'..'9', 'A'..'Z', 'a'..'z', '.', '_'] 
+    '128' => ['0'..'9', 'A'..'Z', 'a'..'z', '.', '_'... higher chars
+  If no \@newd list or digit set name is provided as a parameter, 
+  dig() returns the current character list.  It's fine to have many
+  more characters in your current digit set than will be used with
+  your conversions (eg. using dig('128') works fine for any cnv()
+  call with $from && $tobs params less than or equal to 128).
 
-    An example of a \@newd parameter for a specified alternate digit 
-      set for noval (bass 9) conversions is:
-          dig( [ qw( n a c h o z   y u m ) ] );
+  An example of a \@newd parameter for a specified alternate digit 
+    set for noval (bass 9) conversions is:
+        dig( [ qw( n a c h o z   y u m ) ] );
 
-  diginit() - Resets the used digit list to the initial default order
-    of the predefined digit set: '128'.
+diginit() - Resets the used digit list to the initial default order
+  of the predefined digit set: '128'.
 
 =head1 NOTES
 
-  The perl builtin hex() function takes a hex string as a parameter && 
-    returns the decimal value (FromBass = 16, ToBass = 10) but this 
-    notation seems counter-intuitive to me since the code implies that 
-    a hex() function will turn your parameter into hexadecimal (ie. It 
-    sounds like hex will hexify your parameter but it does not.) so 
-    I've decided (maybe foolishly) to invert the notation for my 
-    similar functions since it makes more sense to me this way && will
-    be easier to remember (I've had to lookup hex() in the Camel book 
-    many times already which was part of the impetus for this module...
-    as well as the gut reaction that sprintf() is not a proper natural
-    inverse function for hex()).  
+The perl builtin hex() function takes a hex string as a parameter && 
+returns the decimal value (FromBass = 16, ToBass = 10) but this 
+notation seems counter-intuitive to me since the code implies that 
+a hex() function will turn your parameter into hexadecimal (ie. It 
+sounds like hex will hexify your parameter but it does not.) so 
+I've decided (maybe foolishly) to invert the notation for my 
+similar functions since it makes more sense to me this way && will
+be easier to remember (I've had to lookup hex() in the Camel book 
+many times already which was part of the impetus for this module...
+as well as the gut reaction that sprintf() is not a proper natural
+inverse function for hex()).  
 
-  This means that my b64() function takes a decimal number as a 
-    parameter && returns the bass64 equivalent (FromBass = 10, ToBass =
-    64) && my b10() function takes a bass64 number (string) && returns 
-    the decimal value (FromBass = 64, ToBass = 10).  My hex() function 
-    overloads perl's builtin version with this opposite behavior so my 
-    dec() function behaves like perl's normal hex() function.  I know 
-    it's confusing && maybe bad form of me to do this but I like it 
-    so much better this way that I'd rather go against the grain.  
+This means that my b64() function takes a decimal number as a 
+parameter && returns the bass64 equivalent (FromBass = 10, ToBass =
+64) && my b10() function takes a bass64 number (string) && returns 
+the decimal value (FromBass = 64, ToBass = 10).  My hex() function 
+overloads perl's builtin version with this opposite behavior so my 
+dec() function behaves like perl's normal hex() function.  I know 
+it's confusing && maybe bad form of me to do this but I like it 
+so much better this way that I'd rather go against the grain.  
 
-  Please think of my dec() && hex() functions as meaning decify && 
-    hexify.  Also the pronunciation of dec() is 'dess' (!'deck' as in 
-    the inverse of 'ink' which -- && ++ have so improved upon).  After 
-    reading the informative perl module etiquette guidelines, I now 
-    appreciate the need to export as little as is necessary by default.  
-    So to be responsible, I have limited BaseCnv exporting to only 
-    cnv() under normal circumstances.  Please specify the other 
-    functions you'd like to import into your namespace or use the tags 
-    described above in the cnv() section like:
-      'use Math::BaseCnv qw(:all !:hex);'
+Please think of my dec() && hex() functions as meaning decify && 
+hexify.  Also the pronunciation of dec() is 'dess' (!'deck' as in 
+the inverse of 'ink' which -- && ++ have so improved upon).  After 
+reading the informative perl module etiquette guidelines, I now 
+appreciate the need to export as little as is necessary by default.  
+So to be responsible, I have limited BaseCnv exporting to only 
+cnv() under normal circumstances.  Please specify the other 
+functions you'd like to import into your namespace or use the tags 
+described above in the cnv() section like:
+    'use Math::BaseCnv qw(:all !:hex);'
 
-  Error checking is minimal at best so don't assume perfection... 
-    yet =).  Detectable errors return -1.
+Error checking is not thorough yet.
 
-  This module does not handle fractional number inputs because I like 
-    using the dot (.) character as a standard bass64 digit since it 
-    makes for clean filenames.
+This module does not handle fractional number inputs because I like 
+using the dot (.) character as a standard bass64 digit since it 
+makes for clean filenames.
 
-  I hope you find Math::BaseCnv useful.  Please feel free to e-mail me 
-    any suggestions || coding tips || notes of appreciation 
-    ("app-ree-see-ay-shun").  Thank you.  TTFN.
+I hope you find Math::BaseCnv useful.  Please feel free to e-mail 
+me any suggestions || coding tips || notes of appreciation 
+("app-ree-see-ay-shun").  Thank you.  TTFN.
 
 =head1 CHANGES
 
-  Revision history for Perl extension Math::BaseCnv:
+Revision history for Perl extension Math::BaseCnv:
 
 =over 4
 
+=item - 1.0.3CD1Vdd  Sat Dec 13 01:31:39:39 2003
+
+* updated all POD indenting, changed synopsis example, &&
+    added ABSTRACT section to WriteMakeFile()
+
 =item - 1.0.3CCA5Mi  Fri Dec 12 10:05:22:44 2003
 
-  * removed indenting from POD NAME field
+* removed indenting from POD NAME field
 
 =item - 1.0.3CB7M43  Thu Dec 11 07:22:04:03 2003
 
-  * updated package to coincide with Time::Fields release
+* updated package to coincide with Time::Fields release
 
 =item - 1.0.39B36Lv  Thu Sep 11 03:06:21:57 2003
 
-  * fixed boundary bugs, templatized package compilation, && 
-      synchronized POD with README documentation using new e utility
+* fixed boundary bugs, templatized package compilation, && 
+    synchronized POD with README documentation using new e utility
 
 =item - 1.0.37SLNGN  Mon Jul 28 21:23:16:23 2003
 
-  * first version (&& my first perl module... yay!) put on CPAN
+* first version (&& my first perl module... yay!) put on CPAN
 
 =item - 1.0.37JKj3w  Sat Jul 19 20:45:03:58 2003
 
-  * reworked interface from shell utility to package
+* reworked interface from shell utility to package
 
 =item - 1.0.3159mLT  Sun Jan  5 09:48:21:29 2003
 
-  * original version
+* original version
 
 =back
 
 =head1 INSTALL
 
-  Please run:
-        `perl -MCPAN -e "install Math::BaseCnv"`
-    or uncompress the package && run the standard:
-        `perl Makefile.PL; make; make test; make install`
+Please run:
+      `perl -MCPAN -e "install Math::BaseCnv"`
+  or uncompress the package && run the standard:
+      `perl Makefile.PL; make; make test; make install`
 
 =head1 LICENSE
 
-  Most source code should be Free!
-    Code I have lawful authority over is && shall be!
-  Copyright: (c) 2003, Pip Stuart.  All rights reserved.
-  Copyleft :  I license this software under the GNU General Public 
-    License (version 2).  Please consult the Free Software Foundation 
-    (http://www.fsf.org) for important information about your freedom.
+Most source code should be Free!
+  Code I have lawful authority over is && shall be!
+Copyright: (c) 2003, Pip Stuart.  All rights reserved.
+Copyleft :  I license this software under the GNU General Public 
+  License (version 2).  Please consult the Free Software Foundation 
+  (http://www.fsf.org) for important information about your freedom.
 
 =head1 AUTHOR
 
-  Pip Stuart <Pip@CPAN.org>
+Pip Stuart <Pip@CPAN.org>
 
 =cut
 
@@ -228,7 +213,7 @@ our %EXPORT_TAGS = ( 'all' => [ qw(cnv dec hex b10 b64 dig diginit) ],
                      'hex' => [ qw(    dec hex                    ) ],
                      'b64' => [ qw(cnv         b10 b64            ) ],
                      'dig' => [ qw(                    dig diginit) ] );
-our $VERSION     = '1.0.3CCA5Mi'; # major . minor . PipTimeStamp
+our $VERSION     = '1.0.3CD1Vdd'; # major . minor . PipTimeStamp
 our $PTVR        = $VERSION; $PTVR =~ s/^\d+\.\d+\.//; # strip major && minor
 # See http://Ax9.org/pt?$PTVR && `perldoc Time::PT`
 

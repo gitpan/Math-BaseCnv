@@ -4,5 +4,6 @@ use ExtUtils::MakeMaker;
 WriteMakefile(
   'NAME'         => 'Math::BaseCnv',
   'VERSION_FROM' => 'BaseCnv.pm', # finds $VERSION
+  'ABSTRACT'     => 'fast functions to convert between number bases',
   'dist'         => { 'COMPRESS' => 'gzip', 'SUFFIX' => 'tgz' },
 );
