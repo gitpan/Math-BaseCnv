@@ -7,15 +7,15 @@ Math::BaseCnv - fast functions to convert between number bases
 
 =head1 VERSION
 
-This documentation refers to version 1.0.41M4GMP of 
-Math::BaseCnv, which was released on Thu Jan 22 04:16:22:25 2004.
+This documentation refers to version 1.0.428LV46 of 
+Math::BaseCnv, which was released on Sun Feb  8 21:31:04:06 2004.
 
 =head1 SYNOPSIS
 
   use Math::BaseCnv;
 
-  # Convert 55 from base-10 (decimal) to base-2 (binary)
-  $binary_55 = cnv( 55, 10, 2 ); 
+  # Convert 63 from base-10 (decimal) to base-2 (binary)
+  $binary_63 = cnv( 63, 10, 2 ); 
 
 =head1 DESCRIPTION
 
@@ -32,7 +32,8 @@ Math::BaseCalc module.
 
 =item - better error checking
 
-=item - handle fractional parts? umm but I like using '.' as a b64 char =(
+=item - handle fractional parts? umm but I like using '.' as a b64 char
+          so ',' comma as separator?
 
 =item -    What else does BaseCnv need?
 
@@ -174,6 +175,12 @@ Revision history for Perl extension Math::BaseCnv:
 
 =over 4
 
+=item - 1.0.428LV46  Sun Feb  8 21:31:04:06 2004
+
+* broke apart CHANGES to descend chronologically
+
+* made dec() auto uppercase param since dec(a) was returning 36 instead of 10
+
 =item - 1.0.41M4GMP  Thu Jan 22 04:16:22:25 2004
 
 * put cnv in bin/ as EXE_FILES
@@ -184,16 +191,19 @@ Revision history for Perl extension Math::BaseCnv:
 
 =item - 1.0.3CNH37s  Tue Dec 23 17:03:07:54 2003
 
-* fixed POD
+* updated POD
 
 =item - 1.0.3CG3dIx  Tue Dec 16 03:39:18:59 2003
 
-* fixed bases and other
+* normalized base spelling and other eccentricities
 
 =item - 1.0.3CD1Vdd  Sat Dec 13 01:31:39:39 2003
 
-* updated all POD indenting, changed synopsis example, and
-    added ABSTRACT section to WriteMakeFile()
+* added ABSTRACT section to WriteMakeFile()
+
+* changed synopsis example
+
+* updated all POD indenting
 
 =item - 1.0.3CCA5Mi  Fri Dec 12 10:05:22:44 2003
 
@@ -205,8 +215,11 @@ Revision history for Perl extension Math::BaseCnv:
 
 =item - 1.0.39B36Lv  Thu Sep 11 03:06:21:57 2003
 
-* fixed boundary bugs, templatized package compilation, and 
-    synchronized POD with README documentation using new e utility
+* synchronized POD with README documentation using new e utility
+
+* templatized package compilation
+
+* fixed boundary bugs
 
 =item - 1.0.37SLNGN  Mon Jul 28 21:23:16:23 2003
 
@@ -258,7 +271,7 @@ our %EXPORT_TAGS = ( 'all' => [ qw(cnv dec hex b10 b64 dig diginit) ],
                      'hex' => [ qw(    dec hex                    ) ],
                      'b64' => [ qw(cnv         b10 b64            ) ],
                      'dig' => [ qw(                    dig diginit) ] );
-our $VERSION     = '1.0.41M4GMP'; # major . minor . PipTimeStamp
+our $VERSION     = '1.0.428LV46'; # major . minor . PipTimeStamp
 our $PTVR        = $VERSION; $PTVR =~ s/^\d+\.\d+\.//; # strip major and minor
 # See http://Ax9.Org/pt?$PTVR and `perldoc Time::PT`
 
@@ -320,10 +333,10 @@ sub cnv10__ { # convert from decimal to some number base fast
   else           { $t = $digsets{$d2bs}->[0]; }
   return($t);
 }
-sub dec { return(cnv__10(shift, 16)); }#shortcut for hexadecimal -> decimal
-sub hex { return(cnv10__(shift, 16)); }#shortcut for decimal     -> hexadecimal
-sub b10 { return(cnv__10(shift, 64)); }#shortcut for base64      -> decimal
-sub b64 { return(cnv10__(shift, 64)); }#shortcut for decimal     -> base64
+sub dec { return(cnv__10(uc(shift), 16)); }#shortcut for hexadecimal -> decimal
+sub hex { return(cnv10__(shift,     16)); }#shortcut for decimal     -> hex
+sub b10 { return(cnv__10(shift,     64)); }#shortcut for base64      -> decimal
+sub b64 { return(cnv10__(shift,     64)); }#shortcut for decimal     -> base64
 sub cnv { # convert between any number base
   my $numb = shift; return(-1) if(!defined $numb || $numb =~ /^$/);
   my $fbas = shift; my $tbas = shift; 
