@@ -7,8 +7,8 @@ Math::BaseCnv - fast functions to convert between number bases
 
 =head1 VERSION
 
-This documentation refers to version 1.0.42REDir of 
-Math::BaseCnv, which was released on Fri Feb 27 14:13:44:53 2004.
+This documentation refers to version 1.0.446EIbS of 
+Math::BaseCnv, which was released on Tue Apr  6 14:18:37:28 2004.
 
 =head1 SYNOPSIS
 
@@ -71,6 +71,7 @@ to local namespaces explicitly or with the following tags:
     :hex - only dec() and hex()
     :b64 - only b10() and b64() and cnv()
     :dig - only dig() and diginit()
+    :fact- only fact() and choo()
 
 =head2 b10($b64n)
 
@@ -124,6 +125,14 @@ set for noval (base 9) conversions is:
 Resets the used digit list to the initial default order
 of the predefined digit set: '128'.
 
+=head2 fact($numb)
+
+A simple function to calculate a memoized factorial of $numb.
+
+=head2 choo($n, $m)
+
+A simple function to calculate a memoized function of $n choose $m.
+
 =head1 NOTES
 
 The perl builtin hex() function takes a hex string as a parameter and 
@@ -164,6 +173,10 @@ This module does not handle fractional number inputs because I like
 using the dot (.) character as a standard base64 digit since it 
 makes for clean filenames.
 
+fact() and choo() are general Math function utilities which are 
+unrelated to number-base conversion but I didn't feel like making a 
+whole separate module for them so they snuck in here.
+
 I hope you find Math::BaseCnv useful.  Please feel free to e-mail 
 me any suggestions or coding tips or notes of appreciation 
 ("app-ree-see-ay-shun").  Thank you.  TTFN.
@@ -173,6 +186,10 @@ me any suggestions or coding tips or notes of appreciation
 Revision history for Perl extension Math::BaseCnv:
 
 =over 4
+
+=item - 1.0.446EIbS  Tue Apr  6 14:18:37:28 2004
+
+* snuck in fact() && choo()
 
 =item - 1.0.42REDir  Fri Feb 27 14:13:44:53 2004
 
@@ -267,14 +284,16 @@ package Math::BaseCnv;
 require Exporter;
 use strict;
 use base qw(Exporter);
+use Memoize; memoize('fact'); memoize('choo');
 # only export cnv() for 'use Math::BaseCnv;' and all other stuff optionally
-our @EXPORT      =              qw(cnv                            )    ; 
-our @EXPORT_OK   =              qw(    dec hex b10 b64 dig diginit)    ; 
-our %EXPORT_TAGS = ( 'all' => [ qw(cnv dec hex b10 b64 dig diginit) ],
-                     'hex' => [ qw(    dec hex                    ) ],
-                     'b64' => [ qw(cnv         b10 b64            ) ],
-                     'dig' => [ qw(                    dig diginit) ] );
-our $VERSION     = '1.0.42REDir'; # major . minor . PipTimeStamp
+our @EXPORT      =             qw(cnv                                      )  ;
+our @EXPORT_OK   =             qw(    dec hex b10 b64 dig diginit fact choo)  ;
+our %EXPORT_TAGS = ( 'all' =>[ qw(cnv dec hex b10 b64 dig diginit fact choo) ],
+                     'hex' =>[ qw(    dec hex                              ) ],
+                     'b64' =>[ qw(cnv         b10 b64                      ) ],
+                     'dig' =>[ qw(                    dig diginit          ) ],
+                     'fact'=>[ qw(                                fact choo) ] );
+our $VERSION     = '1.0.446EIbS'; # major . minor . PipTimeStamp
 our $PTVR        = $VERSION; $PTVR =~ s/^\d+\.\d+\.//; # strip major and minor
 # See http://Ax9.Org/pt?$PTVR and `perldoc Time::PT`
 
@@ -366,7 +385,21 @@ sub cnv { # convert between any number base
   return(-1) if($fbas < 2 || $tbas < 2); # invalid base error
   $numb = cnv__10($numb, $fbas) if($numb =~ /\D/ || $fbas != 10);
   $numb = cnv10__($numb, $tbas) if(                 $tbas != 10);
-  return( $numb );
+  return($numb);
+}
+sub fact { # simple function to calculate factorials
+  my $fact = shift || return(0);
+  my $answ = $fact; 
+  while(--$fact) { $answ *= $fact; } 
+  return($answ);
+}
+sub choo { # simple function to calculate n choose m
+  my $ennn = shift; my $emmm = shift;
+  return(0) unless(defined($ennn) && defined($emmm));
+  my $diff = $ennn - $emmm;
+  my $answ = fact($ennn); my $mfct = fact($emmm); my $dfct = fact($diff);
+  $answ /= ($mfct * $dfct);
+  return($answ);
 }
 
 diginit(); # initialize the Dflt digit set when BaseCnv is used
