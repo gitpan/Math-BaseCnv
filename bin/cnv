@@ -17,7 +17,7 @@
 #   License (version 2).  Please consult the Free Software Foundation 
 #   (http://www.fsf.org) for important information about your freedom.
 # Thank you.  TTFN.
-#                                           -Pip@CPAN.org
+#                                           -Pip@CPAN.Org
 
 use strict;
 use Math::BaseCnv;

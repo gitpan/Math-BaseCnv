@@ -1,7 +1,7 @@
 BaseCnv.pm
 MANIFEST
-MANIFEST.SKIP
 test.pl
-cnv
+bin/cnv
+MANIFEST.SKIP
 README
 Makefile.PL

@@ -1,5 +1,5 @@
-# 3159mLT - Math::BaseCnv.pm created by Pip@CPAN.org to convert between 
-#   arbitrary number bases
+# 3159mLT - Math::BaseCnv.pm created by Pip@CPAN.Org to convert between 
+#   arbitrary number bases.  I'm totally addicted to bass!
 
 =head1 NAME
 
@@ -7,8 +7,8 @@ Math::BaseCnv - fast functions to convert between number bases
 
 =head1 VERSION
 
-This documention refers to version 1.0.3CNH37s of 
-Math::BaseCnv, which was released on Tue Dec 23 17:03:07:54 2003.
+This documentation refers to version 1.0.41M4GMP of 
+Math::BaseCnv, which was released on Thu Jan 22 04:16:22:25 2004.
 
 =head1 SYNOPSIS
 
@@ -47,6 +47,7 @@ that could be represented as characters.  High-bit ASCII proved
 somewhat problemmatic but at least BaseCnv can convert between any
 possible base between 2 and 128 which is more than I originally 
 needed.  I'm quite happy with it and employ b64() too much now =).
+I'm totally addicted to bass!
 
 =head1 USAGE
 
@@ -173,6 +174,14 @@ Revision history for Perl extension Math::BaseCnv:
 
 =over 4
 
+=item - 1.0.41M4GMP  Thu Jan 22 04:16:22:25 2004
+
+* put cnv in bin/ as EXE_FILES
+
+=item - 1.0.418BEPc  Thu Jan  8 11:14:25:38 2004
+
+* testing new e auto-gen MANIFEST(.SKIP)?
+
 =item - 1.0.3CNH37s  Tue Dec 23 17:03:07:54 2003
 
 * fixed POD
@@ -234,11 +243,12 @@ Copyleft :  I license this software under the GNU General Public
 
 =head1 AUTHOR
 
-Pip Stuart <Pip@CPAN.org>
+Pip Stuart <Pip@CPAN.Org>
 
 =cut
 
 package Math::BaseCnv;
+require Exporter;
 use strict;
 use base qw(Exporter);
 # only export cnv() for 'use Math::BaseCnv;' and all other stuff optionally
@@ -248,9 +258,9 @@ our %EXPORT_TAGS = ( 'all' => [ qw(cnv dec hex b10 b64 dig diginit) ],
                      'hex' => [ qw(    dec hex                    ) ],
                      'b64' => [ qw(cnv         b10 b64            ) ],
                      'dig' => [ qw(                    dig diginit) ] );
-our $VERSION     = '1.0.3CNH37s'; # major . minor . PipTimeStamp
+our $VERSION     = '1.0.41M4GMP'; # major . minor . PipTimeStamp
 our $PTVR        = $VERSION; $PTVR =~ s/^\d+\.\d+\.//; # strip major and minor
-# See http://Ax9.org/pt?$PTVR and `perldoc Time::PT`
+# See http://Ax9.Org/pt?$PTVR and `perldoc Time::PT`
 
 my $d2bs = ''; my %bs2d = (); my $nega = '';
 my %digsets = (

@@ -1,5 +1,5 @@
 #!/usr/bin/perl -w
-# 37K2jPD - test.pl created by Pip@CPAN.org to validate Math::BaseCnv
+# 37K2jPD - test.pl created by Pip@CPAN.Org to validate Math::BaseCnv
 #     functionality.  
 #   This script mimics Ken Williams' <ken@forums.swathmore.edu>
 #     test cases for his Math::BaseCalc module.  I have included dig()

@@ -1,5 +1,5 @@
- 3159mLT - Math::BaseCnv.pm created by Pip@CPAN.org to convert between 
-   arbitrary number bases
+ 3159mLT - Math::BaseCnv.pm created by Pip@CPAN.Org to convert between 
+   arbitrary number bases.  I'm totally addicted to bass!
 
 NAME
 
@@ -7,8 +7,8 @@ Math::BaseCnv - fast functions to convert between number bases
 
 VERSION
 
-This documention refers to version 1.0.3CNH37s of 
-Math::BaseCnv, which was released on Tue Dec 23 17:03:07:54 2003.
+This documentation refers to version 1.0.41M4GMP of 
+Math::BaseCnv, which was released on Thu Jan 22 04:16:22:25 2004.
 
 SYNOPSIS
 
@@ -43,6 +43,7 @@ that could be represented as characters.  High-bit ASCII proved
 somewhat problemmatic but at least BaseCnv can convert between any
 possible base between 2 and 128 which is more than I originally 
 needed.  I'm quite happy with it and employ b64() too much now =).
+I'm totally addicted to bass!
 
 USAGE
 
@@ -167,6 +168,14 @@ CHANGES
 
 Revision history for Perl extension Math::BaseCnv:
 
+- 1.0.41M4GMP  Thu Jan 22 04:16:22:25 2004
+
+* put cnv in bin/ as EXE_FILES
+
+- 1.0.418BEPc  Thu Jan  8 11:14:25:38 2004
+
+* testing new e auto-gen MANIFEST(.SKIP)?
+
 - 1.0.3CNH37s  Tue Dec 23 17:03:07:54 2003
 
 * fixed POD
@@ -226,5 +235,5 @@ Copyleft :  I license this software under the GNU General Public
 
 AUTHOR
 
-Pip Stuart <Pip@CPAN.org>
+Pip Stuart <Pip@CPAN.Org>
 

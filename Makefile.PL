@@ -3,7 +3,13 @@ use ExtUtils::MakeMaker;
 # # the contents of the Makefile that is written.
 WriteMakefile(
   'NAME'         => 'Math::BaseCnv',
-  'VERSION_FROM' => 'BaseCnv.pm', # finds $VERSION
+  'VERSION'      => '1.0.41M4GMP',
   'ABSTRACT'     => 'fast functions to convert between number bases',
+  'AUTHOR'       => 'Pip Stuart <Pip@CPAN.Org>',
+  'EXE_FILES'    => [ 
+                      'bin/cnv',
+                    ],
+  'PREREQ_PM'    => {
+  }, # Module::Name => 1.1,
   'dist'         => { 'COMPRESS' => 'gzip', 'SUFFIX' => 'tgz' },
 );
