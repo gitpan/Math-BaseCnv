@@ -117,7 +117,7 @@ my $third  = cnv(($first * $second),      2);
 
 # Test b10/b64 functions
 diginit();
-$result = b64(1234567890); # 10 bass10 digits is only 6 bass64 digits
+$result = b64(1234567890); # 10 base10 digits is only 6 bass64 digits
 &report($result eq '19bWBI', "$result\n");
 
 $result = b10('TheBootyBoys.com'); # Around The Corner =)

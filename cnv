@@ -1,9 +1,9 @@
 #!/usr/bin/perl -w
-# 315EHVb - cnv (CoNVert number bases) <NumberString> <FromBass> <ToBass>
+# 315EHVb - cnv (CoNVert number bases) <NumberString> <FromBase> <ToBase>
 #  If you only supply a number, it will convert to hex if it's decimal &&
 #    decimal if it contains only valid hex digits.  If you just provide one
-#    bass parameter, it assumes that your number is already bass10 && that
-#    you've supplied the ToBass.  Otherwise, you need from && to parameters.
+#    base parameter, it assumes that your number is already base10 && that
+#    you've supplied the ToBase.  Otherwise, you need from && to parameters.
 #  Examples:    `cnv 127   10 16` == "7F"
 #               `cnv 7F    16 3`  == "11201"
 #               `cnv 11201 3  7`  == "241"
@@ -24,6 +24,6 @@ use Math::BaseCnv;
 
 my $numb = shift;
 if(!defined($numb) || $numb =~ /^-+[h\?]/i) {
-  die("USAGE: \`cnv <NumberString> <FromBass> <ToBass>\`\n");
+  die("USAGE: \`cnv <NumberString> <FromBase> <ToBase>\`\n");
 }
 print(cnv($numb, shift, shift));
