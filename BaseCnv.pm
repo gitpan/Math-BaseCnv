@@ -7,8 +7,8 @@ Math::BaseCnv - fast functions to convert between number bases
 
 =head1 VERSION
 
-This documentation refers to version 1.0.446EIbS of 
-Math::BaseCnv, which was released on Tue Apr  6 14:18:37:28 2004.
+This documentation refers to version 1.0.44E9ljP of 
+Math::BaseCnv, which was released on Wed Apr 14 09:47:45:25 2004.
 
 =head1 SYNOPSIS
 
@@ -71,7 +71,7 @@ to local namespaces explicitly or with the following tags:
     :hex - only dec() and hex()
     :b64 - only b10() and b64() and cnv()
     :dig - only dig() and diginit()
-    :fact- only fact() and choo()
+    :sfc - only summ(), fact(), and choo()
 
 =head2 b10($b64n)
 
@@ -125,6 +125,10 @@ set for noval (base 9) conversions is:
 Resets the used digit list to the initial default order
 of the predefined digit set: '128'.
 
+=head2 summ($numb)
+
+A simple function to calculate a memoized summation of $numb down to 1.
+
 =head2 fact($numb)
 
 A simple function to calculate a memoized factorial of $numb.
@@ -173,9 +177,9 @@ This module does not handle fractional number inputs because I like
 using the dot (.) character as a standard base64 digit since it 
 makes for clean filenames.
 
-fact() and choo() are general Math function utilities which are 
-unrelated to number-base conversion but I didn't feel like making a 
-whole separate module for them so they snuck in here.
+summ(), fact(), and choo() are general Math function utilities which
+are unrelated to number-base conversion but I didn't feel like making
+a whole separate module for them so they snuck in here.
 
 I hope you find Math::BaseCnv useful.  Please feel free to e-mail 
 me any suggestions or coding tips or notes of appreciation 
@@ -186,6 +190,12 @@ me any suggestions or coding tips or notes of appreciation
 Revision history for Perl extension Math::BaseCnv:
 
 =over 4
+
+=item - 1.0.44E9ljP  Wed Apr 14 09:47:45:25 2004
+
+* added test for div-by-zero error in choo()
+
+* added summ()
 
 =item - 1.0.446EIbS  Tue Apr  6 14:18:37:28 2004
 
@@ -284,16 +294,16 @@ package Math::BaseCnv;
 require Exporter;
 use strict;
 use base qw(Exporter);
-use Memoize; memoize('fact'); memoize('choo');
+use Memoize; memoize('summ'); memoize('fact'); memoize('choo');
 # only export cnv() for 'use Math::BaseCnv;' and all other stuff optionally
-our @EXPORT      =             qw(cnv                                      )  ;
-our @EXPORT_OK   =             qw(    dec hex b10 b64 dig diginit fact choo)  ;
-our %EXPORT_TAGS = ( 'all' =>[ qw(cnv dec hex b10 b64 dig diginit fact choo) ],
-                     'hex' =>[ qw(    dec hex                              ) ],
-                     'b64' =>[ qw(cnv         b10 b64                      ) ],
-                     'dig' =>[ qw(                    dig diginit          ) ],
-                     'fact'=>[ qw(                                fact choo) ] );
-our $VERSION     = '1.0.446EIbS'; # major . minor . PipTimeStamp
+our @EXPORT      =             qw(cnv                            )  ;
+our @EXPORT_OK   =             qw(    dec hex b10 b64 dig diginit summ fact choo)  ;
+our %EXPORT_TAGS = ( 'all' =>[ qw(cnv dec hex b10 b64 dig diginit summ fact choo) ],
+                     'hex' =>[ qw(    dec hex                    ) ],
+                     'b64' =>[ qw(cnv         b10 b64            ) ],
+                     'dig' =>[ qw(                    dig diginit) ],
+                     'sfc' =>[ qw(summ fact choo                 ) ] );
+our $VERSION     = '1.0.44E9ljP'; # major . minor . PipTimeStamp
 our $PTVR        = $VERSION; $PTVR =~ s/^\d+\.\d+\.//; # strip major and minor
 # See http://Ax9.Org/pt?$PTVR and `perldoc Time::PT`
 
@@ -387,18 +397,27 @@ sub cnv { # convert between any number base
   $numb = cnv10__($numb, $tbas) if(                 $tbas != 10);
   return($numb);
 }
+sub summ { # simple function to calculate summation down to 1
+  my $summ = shift;
+  return(0) unless(defined($summ) && $summ && ($summ > 0));
+  my $answ = $summ; while(--$summ) { $answ += $summ; } 
+  return($answ);
+}
 sub fact { # simple function to calculate factorials
-  my $fact = shift || return(0);
-  my $answ = $fact; 
-  while(--$fact) { $answ *= $fact; } 
+  my $fact = shift;
+  return(0) unless(defined($fact) && $fact && ($fact > 0));
+  my $answ = $fact; while(--$fact) { $answ *= $fact; } 
   return($answ);
 }
 sub choo { # simple function to calculate n choose m
   my $ennn = shift; my $emmm = shift;
-  return(0) unless(defined($ennn) && defined($emmm));
+  return(0) unless(defined($ennn) && defined($emmm) && $ennn && $emmm && ($ennn != $emmm));
+  ($ennn, $emmm) = ($emmm, $ennn) if($ennn < $emmm);
   my $diff = $ennn - $emmm;
   my $answ = fact($ennn); my $mfct = fact($emmm); my $dfct = fact($diff);
-  $answ /= ($mfct * $dfct);
+  $mfct *= $dfct;
+  return(0) unless($mfct);
+  $answ /= $mfct;
   return($answ);
 }
 

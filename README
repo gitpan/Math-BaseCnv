@@ -7,8 +7,8 @@ Math::BaseCnv - fast functions to convert between number bases
 
 VERSION
 
-This documentation refers to version 1.0.446EIbS of 
-Math::BaseCnv, which was released on Tue Apr  6 14:18:37:28 2004.
+This documentation refers to version 1.0.44E9ljP of 
+Math::BaseCnv, which was released on Wed Apr 14 09:47:45:25 2004.
 
 SYNOPSIS
 
@@ -67,7 +67,7 @@ to local namespaces explicitly or with the following tags:
     :hex - only dec() and hex()
     :b64 - only b10() and b64() and cnv()
     :dig - only dig() and diginit()
-    :fact- only fact() and choo()
+    :sfc - only summ(), fact(), and choo()
 
 b10($b64n)
 
@@ -121,6 +121,10 @@ diginit()
 Resets the used digit list to the initial default order
 of the predefined digit set: '128'.
 
+summ($numb)
+
+A simple function to calculate a memoized summation of $numb down to 1.
+
 fact($numb)
 
 A simple function to calculate a memoized factorial of $numb.
@@ -169,9 +173,9 @@ This module does not handle fractional number inputs because I like
 using the dot (.) character as a standard base64 digit since it 
 makes for clean filenames.
 
-fact() and choo() are general Math function utilities which are 
-unrelated to number-base conversion but I didn't feel like making a 
-whole separate module for them so they snuck in here.
+summ(), fact(), and choo() are general Math function utilities which
+are unrelated to number-base conversion but I didn't feel like making
+a whole separate module for them so they snuck in here.
 
 I hope you find Math::BaseCnv useful.  Please feel free to e-mail 
 me any suggestions or coding tips or notes of appreciation 
@@ -180,6 +184,12 @@ me any suggestions or coding tips or notes of appreciation
 CHANGES
 
 Revision history for Perl extension Math::BaseCnv:
+
+- 1.0.44E9ljP  Wed Apr 14 09:47:45:25 2004
+
+* added test for div-by-zero error in choo()
+
+* added summ()
 
 - 1.0.446EIbS  Tue Apr  6 14:18:37:28 2004
 

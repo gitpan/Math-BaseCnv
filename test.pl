@@ -18,7 +18,7 @@
 #   Before `make install' is performed this script should be run with
 #     `make test'.  After `make install' it should work as `perl test.pl'.
 
-BEGIN { $| = 1; print "0..19\n"; }
+BEGIN { $| = 1; print "0..21\n"; }
 END   { print "not ok 1\n" unless($loaded); }
 use Math::BaseCnv qw(:all);
 
@@ -139,3 +139,9 @@ $result = choo( 15, 7 );
 
 $result = choo( 13, 5 );
 &report($result eq '1287', "$result\n");
+
+$result = summ( 7 );
+&report($result eq '28', "$result\n");
+
+$result = summ( 15 );
+&report($result eq '120', "$result\n");

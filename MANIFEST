@@ -2,6 +2,9 @@ BaseCnv.pm
 MANIFEST
 test.pl
 bin/cnv
+bin/summ
+bin/fact
+bin/choo
 MANIFEST.SKIP
 README
 Makefile.PL
