@@ -2,6 +2,10 @@ BaseCnv.pm
 MANIFEST
 test.pl
 bin/cnv
+bin/dec
+bin/hex
+bin/b10
+bin/b64
 bin/summ
 bin/fact
 bin/choo

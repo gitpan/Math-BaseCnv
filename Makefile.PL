@@ -3,11 +3,15 @@ use ExtUtils::MakeMaker;
 # # the contents of the Makefile that is written.
 WriteMakefile(
   'NAME'         => 'Math::BaseCnv',
-  'VERSION'      => '1.0.44E9ljP',
+  'VERSION'      => '1.2.45UC8fo',
   'ABSTRACT'     => 'fast functions to convert between number bases',
   'AUTHOR'       => 'Pip Stuart <Pip@CPAN.Org>',
   'EXE_FILES'    => [ 
                       'bin/cnv',
+                      'bin/dec',
+                      'bin/hex',
+                      'bin/b10',
+                      'bin/b64',
                       'bin/summ',
                       'bin/fact',
                       'bin/choo',

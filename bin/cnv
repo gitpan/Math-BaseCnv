@@ -24,6 +24,6 @@ use Math::BaseCnv;
 
 my $numb = shift;
 if(!defined($numb) || $numb =~ /^-+[h\?]/i) {
-  die("USAGE: \`cnv <NumberString> <FromBase> <ToBase>\`\n");
+  die("USAGE: `cnv <NumberString> <FromBase> <ToBase>`\n");
 }
 print(cnv($numb, shift, shift));

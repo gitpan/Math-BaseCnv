@@ -5,15 +5,16 @@
 #     test cases for his Math::BaseCalc module.  I have included dig()
 #     function calls with most tests out of respect for BaseCalc even
 #     though the only necessary calls are the ones that set the 
-#     digits to something other than '0'..'9', 'A'..'Z' since BaseCnv
-#     initializes the digit list with good characters for any small
-#     common number bases.  My timings showed BaseCnv to require 
-#     about 3/4ths of the execution time needed by BaseCalc with all
-#     the unnecessary dig() calls && about twice as fast when dig() is
-#     only called when it must be.  BaseCalc may not need all the 
-#     $calc->digits() calls either though so that last one is probably 
-#     an unfair performance comparison.  Besides speed, conversion 
-#     functions make more sense to me than objects ... even if perl's
+#     digits to something other than '0'..'9', 'A'..'Z' since my 
+#     Math::BaseCnv diginit() function initializes the digit list with
+#     good characters for any small common number bases.  My benchmarks
+#     showed BaseCnv to require about 3/4ths of the execution time
+#     needed by BaseCalc when including all the unnecessary dig() calls
+#     && about twice as fast when dig() is only called when it must be.
+#     BaseCalc may not need all the $calc->digits() calls either though
+#     so that last one is probably an unfair performance comparison.
+#     Besides speed, conversion functions make more sense to me than
+#     objects since I want to use them so frequently... even if Perl's
 #     hex() builtin is the opposite behavior of mine =).
 #   Before `make install' is performed this script should be run with
 #     `make test'.  After `make install' it should work as `perl test.pl'.

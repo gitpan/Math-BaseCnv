@@ -7,8 +7,8 @@ Math::BaseCnv - fast functions to convert between number bases
 
 =head1 VERSION
 
-This documentation refers to version 1.0.44E9ljP of 
-Math::BaseCnv, which was released on Wed Apr 14 09:47:45:25 2004.
+This documentation refers to version 1.2.45UC8fo of 
+Math::BaseCnv, which was released on Sun May 30 12:08:41:50 2004.
 
 =head1 SYNOPSIS
 
@@ -21,7 +21,7 @@ Math::BaseCnv, which was released on Wed Apr 14 09:47:45:25 2004.
 
 BaseCnv provides a few simple functions for converting between 
 arbitrary number bases.  It is as fast as I currently know how to 
-make it (of course relying only on the lovely perl).  If you 
+make it (of course relying only on the lovely Perl).  If you 
 would rather utilize an object syntax for number-base conversion, 
 please see Ken Williams's <ken@forum.swarthmore.edu> fine 
 Math::BaseCalc module.
@@ -46,25 +46,38 @@ convert quickly between the 3 number bases I use most (10, 16, and
 64).  It turned out that it was trivial to handle any number base 
 that could be represented as characters.  High-bit ASCII proved 
 somewhat problemmatic but at least BaseCnv can convert between any
-possible base between 2 and 128 which is more than I originally 
+possible base between 2 and 128 which is much more than I originally
 needed.  I'm quite happy with it and employ b64() too much now =).
-I'm totally addicted to bass!
+I'm totally addicted to bass!  Sometimes I intentionally misspell
+'base' as 'bass' because I'm a dork who likes bass in my face.
 
 =head1 USAGE
 
 =head2 cnv($numb[,$from[,$tobs]])
 
-Convert the number contained in $numb from its current number base
-($from) into the result number base ($tobs). If only $numb is provided,
-it will be converted to hexadecimal (base 16) if it only contains valid
-decimal digits or it will be converted to decimal (base 10) if it
-contains hexadecimal digits or begins with '0x'. If only $numb and $from
-are provided as parameters, cnv assumes that $numb is already in decimal
-format and uses $from as the $tobs. The normal (and most clear) usage is
-to provide all 3 parameters.
+CoNVert the number contained in $numb from its current number base
+($from) into the result number base ($tobs).
+
+B<When only $numb is provided as a parameter:>
+
+If $numb only contains valid decimal (base 10) digits, it will be
+converted to hexadecimal (base 16).
+
+If $numb only contains valid hexadecimal (base 16) digits or begins
+with '0x', it will be it will be converted to decimal (base 10).
+
+B<When only $numb and $from are provided as parameters:>
+
+cnv() assumes that $numb is already in decimal format and uses $from
+as the $tobs.
+
+B<When all three parameters are provided:>
+
+The normal (and most clear) usage of cnv() is to provide all three
+parameters where $numb is converted from $from base to $tobs.
 
 cnv() is the only function that is exported from a normal 
-use Math::BaseCnv;' command.  Other functions can be imported
+'use Math::BaseCnv;' command.  The other functions below can be imported
 to local namespaces explicitly or with the following tags:
 
     :all - every function described here
@@ -93,6 +106,8 @@ A shortcut to convert the number given as a parameter
 A shortcut to convert the number given as a parameter 
 ($b10n) from decimal (base 10) to hexadecimal (base 16).
 
+Please read the [NOTES] regarding hex().
+
 =head2 dig(\@newd)
 
 Assign the new digit character list to be used in 
@@ -116,14 +131,15 @@ your conversions (eg. using dig('128') works fine for any cnv()
 call with $from and $tobs params less than or equal to 128).
 
 An example of a \@newd parameter for a specified alternate digit 
-set for noval (base 9) conversions is:
+set for base 9 conversions is:
 
     dig( [ qw( n a c h o z   y u m ) ] );
 
 =head2 diginit()
 
 Resets the used digit list to the initial default order
-of the predefined digit set: '128'.
+of the predefined digit set: '128'.  This is simply a shortcut for
+calling dig('128') for reinitialization purposes.
 
 =head2 summ($numb)
 
@@ -133,42 +149,43 @@ A simple function to calculate a memoized summation of $numb down to 1.
 
 A simple function to calculate a memoized factorial of $numb.
 
-=head2 choo($n, $m)
+=head2 choo($ennn, $emmm)
 
-A simple function to calculate a memoized function of $n choose $m.
+A simple function to calculate a memoized function of $ennn choose $emmm.
 
 =head1 NOTES
 
-The perl builtin hex() function takes a hex string as a parameter and 
+The Perl builtin hex() function takes a hex string as a parameter and 
 returns the decimal value (FromBase = 16, ToBase = 10) but this 
-notation seems counter-intuitive to me since the code implies that 
-a hex() function will turn your parameter into hexadecimal (ie. It 
-sounds like hex will hexify your parameter but it does not.) so 
-I've decided (maybe foolishly) to invert the notation for my 
-similar functions since it makes more sense to me this way and will
-be easier to remember (I've had to lookup hex() in the Camel book 
-many times already which was part of the impetus for this module...
-as well as the gut reaction that sprintf() is not a proper natural
-inverse function for hex()).  
+notation seems counter-intuitive to me since a simple reading of the
+code suggests that a hex() function will turn your parameter into
+hexadecimal (ie. It sounds like Perl's hex() will hexify your parameter
+but it does not.) so I've decided (maybe foolishly) to invert the
+notation for my similar functions since it makes more sense to me this
+way and will be easier to remember (I've had to lookup hex() in the
+Camel book many times already which was part of the impetus for this
+module...  as well as the gut reaction that sprintf() is not a proper
+natural inverse function for hex()).
 
 This means that my b64() function takes a decimal number as a 
 parameter and returns the base64 equivalent (FromBase = 10, ToBase =
 64) and my b10() function takes a base64 number (string) and returns 
 the decimal value (FromBase = 64, ToBase = 10).  My hex() function 
-overloads perl's builtin version with this opposite behavior so my 
-dec() function behaves like perl's normal hex() function.  I know 
+overloads Perl's builtin version with this opposite behavior so my 
+dec() function behaves like Perl's normal hex() function.  I know 
 it's confusing and maybe bad form of me to do this but I like it 
-so much better this way that I'd rather go against the grain.  
+so much better this way that I'd rather go against the grain.
 
 Please think of my dec() and hex() functions as meaning decify and 
-hexify.  Also the pronunciation of dec() is 'dess' (!'deck' as in 
-the inverse of 'ink' which -- and ++ have so improved upon).  After 
-reading the informative perl module etiquette guidelines, I now 
+hexify.  Also the pronunciation of dec() is 'dess' (!'deck' which
+would be the inverse of 'ink' which -- and ++ already do so well).
+After reading the informative Perl module etiquette guidelines, I now
 appreciate the need to export as little as is necessary by default.  
 So to be responsible, I have limited BaseCnv exporting to only 
 cnv() under normal circumstances.  Please specify the other 
 functions you'd like to import into your namespace or use the tags 
 described above in the cnv() section like:
+
     'use Math::BaseCnv qw(:all !:hex);'
 
 Error checking is minimal.
@@ -179,7 +196,7 @@ makes for clean filenames.
 
 summ(), fact(), and choo() are general Math function utilities which
 are unrelated to number-base conversion but I didn't feel like making
-a whole separate module for them so they snuck in here.
+another separate module just for them so they snuck in here.
 
 I hope you find Math::BaseCnv useful.  Please feel free to e-mail 
 me any suggestions or coding tips or notes of appreciation 
@@ -190,6 +207,10 @@ me any suggestions or coding tips or notes of appreciation
 Revision history for Perl extension Math::BaseCnv:
 
 =over 4
+
+=item - 1.2.45UC8fo  Sun May 30 12:08:41:50 2004
+
+* tidied POD && upped minor version number since CPAN can't read PTVR
 
 =item - 1.0.44E9ljP  Wed Apr 14 09:47:45:25 2004
 
@@ -253,7 +274,7 @@ Revision history for Perl extension Math::BaseCnv:
 
 =item - 1.0.37SLNGN  Mon Jul 28 21:23:16:23 2003
 
-* first version (and my first perl module... yay!) put on CPAN
+* first version (and my first Perl module... yay!) put on CPAN
 
 =item - 1.0.37JKj3w  Sat Jul 19 20:45:03:58 2003
 
@@ -303,7 +324,7 @@ our %EXPORT_TAGS = ( 'all' =>[ qw(cnv dec hex b10 b64 dig diginit summ fact choo
                      'b64' =>[ qw(cnv         b10 b64            ) ],
                      'dig' =>[ qw(                    dig diginit) ],
                      'sfc' =>[ qw(summ fact choo                 ) ] );
-our $VERSION     = '1.0.44E9ljP'; # major . minor . PipTimeStamp
+our $VERSION     = '1.2.45UC8fo'; # major . minor . PipTimeStamp
 our $PTVR        = $VERSION; $PTVR =~ s/^\d+\.\d+\.//; # strip major and minor
 # See http://Ax9.Org/pt?$PTVR and `perldoc Time::PT`
 
@@ -366,9 +387,9 @@ sub cnv10__ { # convert from decimal to some number base fast
   return($t);
 }
 sub dec { return(cnv__10(uc(shift), 16)); }#shortcut for hexadecimal -> decimal
-sub hex { return(cnv10__(shift,     16)); }#shortcut for decimal     -> hex
-sub b10 { return(cnv__10(shift,     64)); }#shortcut for base64      -> decimal
-sub b64 { return(cnv10__(shift,     64)); }#shortcut for decimal     -> base64
+sub hex { return(cnv10__(   shift,  16)); }#shortcut for decimal     -> hex
+sub b10 { return(cnv__10(   shift,  64)); }#shortcut for base64      -> decimal
+sub b64 { return(cnv10__(   shift,  64)); }#shortcut for decimal     -> base64
 sub cnv { # convert between any number base
   my $numb = shift; return(-1) if(!defined $numb || $numb =~ /^$/);
   my $fbas = shift; my $tbas = shift; 
@@ -421,6 +442,6 @@ sub choo { # simple function to calculate n choose m
   return($answ);
 }
 
-diginit(); # initialize the Dflt digit set when BaseCnv is used
+diginit(); # initialize the Dflt digit set whenever BaseCnv is used
 
 127;
