@@ -1,8 +1,7 @@
 BaseCnv.pm
-Changes
 MANIFEST
 MANIFEST.SKIP
-Makefile.PL
-README
-cnv
 test.pl
+cnv
+README
+Makefile.PL

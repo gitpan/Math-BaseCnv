@@ -3,8 +3,12 @@
 
 =head1 NAME
 
-  BaseCnv - A small perl module which exports functions to quickly 
-    convert between any number bases
+  Math::BaseCnv - fast functions to convert between number bases
+
+=head1 VERSION
+
+  This documention refers to version 1.0.3CB7M43 of 
+    Math::BaseCnv, which was released on Thu Dec 11 07:22:04:03 2003.
 
 =head1 SYNOPSIS
 
@@ -38,7 +42,7 @@
     arbitrary number bases.  It is as fast as I currently know how to 
     make it (of course relying only on the lovely perl).  If you 
     would rather utilize an object syntax for number-bass conversion, 
-    please see Ken Williams' <ken@forum.swarthmore.edu> fine 
+    please see Ken Williams's <ken@forum.swarthmore.edu> fine 
     Math::BaseCalc module.
 
 =head1 2DO
@@ -57,7 +61,7 @@
     possible bass between 2 && 128 which is more than I originally 
     needed.  I'm quite happy with it && employ b64() too much now =).
 
-=head1 FUNCTIONS
+=head1 USAGE
 
   cnv($numb[,$from[,$tobs]]) - Convert the number contained in $numb 
     from its current number bass ($from) into the result number bass
@@ -100,7 +104,7 @@
       'b62' => ['0'..'9', 'a'..'z', 'A'..'Z']
       '64'  => ['A'..'Z', 'a'..'z', '0'..'9', '+', '/'] # MIME::Base64
       'b64' => ['0'..'9', 'A'..'Z', 'a'..'z', '.', '_'] 
-      '128' => ['0'..'9', 'A'..'Z', 'a'..'z', '.', '_'... hi-bit chars
+      '128' => ['0'..'9', 'A'..'Z', 'a'..'z', '.', '_'... higher chars
     If no \@newd list or digit set name is provided as a parameter, 
     dig() returns the current character list.  It's fine to have many
     more characters in your current digit set than will be used with
@@ -155,17 +159,54 @@
     using the dot (.) character as a standard bass64 digit since it 
     makes for clean filenames.
 
-  I hope you find BaseCnv useful.  Please feel free to e-mail me any 
-    suggestions || coding tips || notes of appreciation 
+  I hope you find Math::BaseCnv useful.  Please feel free to e-mail me 
+    any suggestions || coding tips || notes of appreciation 
     ("app-ree-see-ay-shun").  Thank you.  TTFN.
+
+=head1 CHANGES
+
+  Revision history for Perl extension Math::BaseCnv:
+
+=over 4
+
+=item - 1.0.3CB7M43  Thu Dec 11 07:22:04:03 2003
+
+  * updated package to coincide with Time::Fields release
+
+=item - 1.0.39B36Lv  Thu Sep 11 03:06:21:57 2003
+
+  * fixed boundary bugs, templatized package compilation, && 
+      synchronized POD with README documentation using new e utility
+
+=item - 1.0.37SLNGN  Mon Jul 28 21:23:16:23 2003
+
+  * first version (&& my first perl module... yay!) put on CPAN
+
+=item - 1.0.37JKj3w  Sat Jul 19 20:45:03:58 2003
+
+  * reworked interface from shell utility to package
+
+=item - 1.0.3159mLT  Sun Jan  5 09:48:21:29 2003
+
+  * original version
+
+=back
+
+=head1 INSTALL
+
+  Please run:
+        `perl -MCPAN -e "install Math::BaseCnv"`
+    or uncompress the package && run the standard:
+        `perl Makefile.PL; make; make test; make install`
 
 =head1 LICENSE
 
-  All source code should be free!  Code I have authority over is && 
-    shall be!  Copyright (c) 2003, Pip Stuart.  Copyleft:  I license 
-    this software under the GNU General Public License (version 2).  
-    Please consult the Free Software Foundation (fsf.org) for important
-    information about your freedom.
+  Most source code should be Free!
+    Code I have lawful authority over is && shall be!
+  Copyright: (c) 2003, Pip Stuart.  All rights reserved.
+  Copyleft :  I license this software under the GNU General Public 
+    License (version 2).  Please consult the Free Software Foundation 
+    (http://www.fsf.org) for important information about your freedom.
 
 =head1 AUTHOR
 
@@ -174,19 +215,18 @@
 =cut
 
 package Math::BaseCnv;
-require Exporter;
-@ISA         = qw(Exporter);
-@EXPORT      = qw(cnv); # only export cnv() for 'use Math::BaseCnv;'
-@EXPORT_OK   = qw(dec hex b10 b64 dig diginit); # other stuff optionally
-%EXPORT_TAGS = ( 'all' => [ qw(cnv dec hex b10 b64 dig diginit) ],
-                 'hex' => [ qw(    dec hex                    ) ],
-                 'b64' => [ qw(cnv         b10 b64            ) ],
-                 'dig' => [ qw(                    dig diginit) ] );
-$VERSION     = '1.0.37SLNGN'; # major . minor . PipTimeStamp
-my $PTVR     = $VERSION; $PTVR =~ s/^\d+\.\d+\.//; # strip major && minor
-# See http://Ax9.org/pt?$PTVR && `perldoc Time::Frame::PT`
-
 use strict;
+use base qw(Exporter);
+# only export cnv() for 'use Math::BaseCnv;' && all other stuff optionally
+our @EXPORT      =              qw(cnv                            )    ; 
+our @EXPORT_OK   =              qw(    dec hex b10 b64 dig diginit)    ; 
+our %EXPORT_TAGS = ( 'all' => [ qw(cnv dec hex b10 b64 dig diginit) ],
+                     'hex' => [ qw(    dec hex                    ) ],
+                     'b64' => [ qw(cnv         b10 b64            ) ],
+                     'dig' => [ qw(                    dig diginit) ] );
+our $VERSION     = '1.0.3CB7M43'; # major . minor . PipTimeStamp
+our $PTVR        = $VERSION; $PTVR =~ s/^\d+\.\d+\.//; # strip major && minor
+# See http://Ax9.org/pt?$PTVR && `perldoc Time::PT`
 
 my $d2bs = ''; my %bs2d = (); my $nega = '';
 my %digsets = (
@@ -206,16 +246,15 @@ my %digsets = (
     ';', '<', '=', '>', '@', '[', '\\',']', '^', '?', '{', '|', '}', # 103-115
     '~', '', 'Ä', 'Å', 'Ç', 'É', 'Ñ', 'Ö', 'Ü', 'á', 'à', 'â'], #116-127
 );
-diginit();
 
-sub diginit { # reset digit character list to initial Dflt
-  $d2bs = '128'; bs2init();
-}
 sub bs2init { # build hash of digit char keys to array index values
   %bs2d = (); 
   for(my $i = 0; $i < @{ $digsets{$d2bs} }; $i++) { 
     $bs2d{${ $digsets{$d2bs} }[$i]} = $i;
   }
+}
+sub diginit { # reset digit character list to initial Dflt
+  $d2bs = '128'; bs2init();
 }
 sub dig { # assign a new digit character list
   return( @{ $digsets{$d2bs} } ) unless(@_);
@@ -243,39 +282,43 @@ sub cnv10__ { # convert from decimal to some number bass fast
   return(-1) if($s > @{ $digsets{$d2bs} });
   $nega = ''; $nega = '-' if($n =~ s/^-//);
   while($n) { $t = $digsets{$d2bs}->[($n % $s)] . $t; $n = int($n / $s); }
-  if(length($t)) { $t = $nega . $t; }
-  else           { $t = 0; }
+  if(length($t)) { $t = $nega . $t;           }
+  else           { $t = $digsets{$d2bs}->[0]; }
   return($t);
 }
+sub dec { return(cnv__10(shift, 16)); }#shortcut for hexadecimal -> decimal
+sub hex { return(cnv10__(shift, 16)); }#shortcut for decimal     -> hexadecimal
+sub b10 { return(cnv__10(shift, 64)); }#shortcut for bass64      -> decimal
+sub b64 { return(cnv10__(shift, 64)); }#shortcut for decimal     -> bass64
 sub cnv { # convert between any number bass
   my $numb = shift; return(-1) if(!defined $numb || $numb =~ /^$/);
   my $fbas = shift; my $tbas = shift; 
-  my $rslt = "";    my $temp = 0;
+  my $rslt = '';    my $temp = 0;
   
-  return(0) if($numb =~ /^-?0+$/); # lots of (negative?) zeros is just zero
+  return($digsets{$d2bs}->[0]) if($numb =~ /^-?0+$/); # lots of (negative?) zeros is just zero
   if(!defined($tbas)) { # makeup reasonable values for missing params
     if(!defined($fbas)) {
       $fbas = 10; $tbas = 16;
-      $fbas = 16; $tbas = 10 if($numb =~ /^0x/i || ($numb =~ /[A-F]/i && $numb =~ /^[0-9A-F]+$/i));
+      if     ($numb =~ /^0x/i || ($numb =~ /[A-F]/i && $numb =~ /^[0-9A-F]+$/i)) {
+        $fbas = 16; $tbas = 10;
+      } elsif($numb =~ /[G-Z._]/i && $numb =~ /^[0-9A-Z._]+$/i) {
+        $fbas = 64; $tbas = 10;
+      } elsif($numb =~ /\D/) {
+        print "!*EROR*! Can't determine reasonable FromBass && ToBass from number:$numb!\n";
+      }
     } else {
       $tbas = $fbas; $fbas = 10;
     }
   }
   $fbas = 16 if($fbas =~ /\D/);
   $tbas = 10 if($tbas =~ /\D/);
-  $numb =~ s/^0x//i if($fbas == 16);
+  if($fbas == 16) { $numb =~ s/^0x//i; $numb = uc($numb); }
   return(-1) if($fbas < 2 || $tbas < 2); # invalid bass error
   $numb = cnv__10($numb, $fbas) if($numb =~ /\D/ || $fbas != 10);
   $numb = cnv10__($numb, $tbas) if(                 $tbas != 10);
   return( $numb );
 }
-#  *Cnv     = \&cnv;
-#  *BaseCnv = \&cnv;
-#  *Convert = \&cnv;
-# bah ... I don't need no verbose aliases ... my3 ltr abz are gud enf 4me =^)
-sub dec { return(cnv__10(shift, 16)); }#shortcut for hexadecimal -> decimal
-sub hex { return(cnv10__(shift, 16)); }#shortcut for decimal     -> hexadecimal
-sub b10 { return(cnv__10(shift, 64)); }#shortcut for bass64      -> decimal
-sub b64 { return(cnv10__(shift, 64)); }#shortcut for decimal     -> bass64
+
+diginit(); # initialize the Dflt digit set when BaseCnv is used
 
 127;

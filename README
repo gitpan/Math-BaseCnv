@@ -3,8 +3,12 @@
 
 NAME
 
-  BaseCnv - A small perl module which exports functions to quickly 
-    convert between any number bases
+  Math::BaseCnv - fast functions to convert between number bases
+
+VERSION
+
+  This documention refers to version 1.0.3CB7M43 of 
+    Math::BaseCnv, which was released on Thu Dec 11 07:22:04:03 2003.
 
 SYNOPSIS
 
@@ -38,7 +42,7 @@ DESCRIPTION
     arbitrary number bases.  It is as fast as I currently know how to 
     make it (of course relying only on the lovely perl).  If you 
     would rather utilize an object syntax for number-bass conversion, 
-    please see Ken Williams' <ken@forum.swarthmore.edu> fine 
+    please see Ken Williams's <ken@forum.swarthmore.edu> fine 
     Math::BaseCalc module.
 
 2DO
@@ -55,9 +59,9 @@ WHY?
     that could be represented as characters.  High-bit ASCII proved 
     somewhat problemmatic but at least BaseCnv can convert between any
     possible bass between 2 && 128 which is more than I originally 
-    needed.  I'm quite happy with it =).
+    needed.  I'm quite happy with it && employ b64() too much now =).
 
-FUNCTIONS
+USAGE
 
   cnv($numb[,$from[,$tobs]]) - Convert the number contained in $numb 
     from its current number bass ($from) into the result number bass
@@ -68,6 +72,14 @@ FUNCTIONS
     provided as parameters, cnv assumes that $numb is already in 
     decimal format && uses $from as the $tobs.  The normal (&& most 
     clear) usage is to provide all 3 parameters.
+
+    cnv() is the only function that is exported from a normal 
+      'use Math::BaseCnv;' command.  Other functions can be imported
+      to local namespaces explicitly or with the following tags:
+        :all - every function described here
+        :hex - only dec() && hex()
+        :b64 - only b10() && b64() && cnv()
+        :dig - only dig() && diginit()
 
   b10($b64n) - A shortcut to convert the number given as a parameter 
     ($b64n) from bass 64 to decimal (bass 10).
@@ -80,11 +92,10 @@ FUNCTIONS
 
   hex($b10n) - A shortcut to convert the number given as a parameter 
     ($b10n) from decimal (bass 10) to hexadecimal (bass 16).
-    hex() exports optionally.
 
   dig(\@newd) - Assign the new digit character list to be used in 
-    place of the Dflt one.  dig() can also alternately accept a string
-    name matching one of the following predefined digit sets:
+    place of the default one.  dig() can also alternately accept a 
+    string name matching one of the following predefined digit sets:
       'bin' => ['0', '1']
       'oct' => ['0'..'7']
       'dec' => ['0'..'9']
@@ -93,18 +104,18 @@ FUNCTIONS
       'b62' => ['0'..'9', 'a'..'z', 'A'..'Z']
       '64'  => ['A'..'Z', 'a'..'z', '0'..'9', '+', '/'] # MIME::Base64
       'b64' => ['0'..'9', 'A'..'Z', 'a'..'z', '.', '_'] 
-      '128' => ['0'..'9', 'A'..'Z', 'a'..'z', '.', '_'... hi-bit chars
+      '128' => ['0'..'9', 'A'..'Z', 'a'..'z', '.', '_'... higher chars
     If no \@newd list or digit set name is provided as a parameter, 
     dig() returns the current character list.  It's fine to have many
     more characters in your current digit set than will be used with
     your conversions (eg. using dig('128') works fine for any cnv()
-    call with a $from or $tobs param less than or equal to 128).
+    call with $from && $tobs params less than or equal to 128).
 
     An example of a \@newd parameter for a specified alternate digit 
-      set for octal conversions is:
+      set for noval (bass 9) conversions is:
           dig( [ qw( n a c h o z   y u m ) ] );
 
-  diginit() - Resets the used digit list to the initial Dflt order
+  diginit() - Resets the used digit list to the initial default order
     of the predefined digit set: '128'.
 
 NOTES
@@ -131,11 +142,15 @@ NOTES
     so much better this way that I'd rather go against the grain.  
 
   Please think of my dec() && hex() functions as meaning decify && 
-    hexify.  I guess I should export my hex optionally... or not... 
-    alright, it's in the optional EXPORT_OK now since it's totally not
-    okay to break other programs with opposite behavior but my hex is 
-    there if you want to import it && the same behavior is easy enough
-    with just cnv() =).
+    hexify.  Also the pronunciation of dec() is 'dess' (!'deck' as in 
+    the inverse of 'ink' which -- && ++ have so improved upon).  After 
+    reading the informative perl module etiquette guidelines, I now 
+    appreciate the need to export as little as is necessary by default.  
+    So to be responsible, I have limited BaseCnv exporting to only 
+    cnv() under normal circumstances.  Please specify the other 
+    functions you'd like to import into your namespace or use the tags 
+    described above in the cnv() section like:
+      'use Math::BaseCnv qw(:all !:hex);'
 
   Error checking is minimal at best so don't assume perfection... 
     yet =).  Detectable errors return -1.
@@ -144,9 +159,34 @@ NOTES
     using the dot (.) character as a standard bass64 digit since it 
     makes for clean filenames.
 
-  I hope you find BaseCnv useful.  Please feel free to e-mail me any 
-    suggestions || coding tips || notes of appreciation 
+  I hope you find Math::BaseCnv useful.  Please feel free to e-mail me 
+    any suggestions || coding tips || notes of appreciation 
     ("app-ree-see-ay-shun").  Thank you.  TTFN.
+
+CHANGES
+
+  Revision history for Perl extension Math::BaseCnv:
+
+- 1.0.3CB7M43  Thu Dec 11 07:22:04:03 2003
+
+  * updated package to coincide with Time::Fields release
+
+- 1.0.39B36Lv  Thu Sep 11 03:06:21:57 2003
+
+  * fixed boundary bugs, templatized package compilation, && 
+      synchronized POD with README documentation using new e utility
+
+- 1.0.37SLNGN  Mon Jul 28 21:23:16:23 2003
+
+  * first version (&& my first perl module... yay!) put on CPAN
+
+- 1.0.37JKj3w  Sat Jul 19 20:45:03:58 2003
+
+  * reworked interface from shell utility to package
+
+- 1.0.3159mLT  Sun Jan  5 09:48:21:29 2003
+
+  * original version
 
 INSTALL
 
@@ -155,17 +195,14 @@ INSTALL
     or uncompress the package && run the standard:
         `perl Makefile.PL; make; make test; make install`
 
-CHANGES
-
-  Please see the 'Changes' file from the install package.
-
 LICENSE
 
-  All source code should be free!  Code I have authority over is && 
-    shall be!  Copyright (c) 2003, Pip Stuart.  Copyleft:  I license 
-    this software under the GNU General Public License (version 2).  
-    Please consult the Free Software Foundation (fsf.org) for important
-    information about your freedom.
+  Most source code should be Free!
+    Code I have lawful authority over is && shall be!
+  Copyright: (c) 2003, Pip Stuart.  All rights reserved.
+  Copyleft :  I license this software under the GNU General Public 
+    License (version 2).  Please consult the Free Software Foundation 
+    (http://www.fsf.org) for important information about your freedom.
 
 AUTHOR
 
