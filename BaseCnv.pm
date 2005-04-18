@@ -1,6 +1,6 @@
 #!/usr/bin/perl -w
-# 3159mLT - Math::BaseCnv.pm created by Pip@CPAN.Org to convert between 
-#   arbitrary number bases.  I'm totally addicted to bass!
+# 3159mLT - Math::BaseCnv.pm created by Pip Stuart <Pip@CPAN.Org>
+#   to convert between arbitrary number bases.  I'm totally addicted to bass!
 
 =head1 NAME
 
@@ -8,8 +8,8 @@ Math::BaseCnv - fast functions to convert between number bases
 
 =head1 VERSION
 
-This documentation refers to version 1.2.4CCJFl7 of 
-Math::BaseCnv, which was released on Sun Dec 12 19:15:47:07 2004.
+This documentation refers to version 1.2.54HK3pB of 
+Math::BaseCnv, which was released on Sun Apr 17 20:03:51:11 2005.
 
 =head1 SYNOPSIS
 
@@ -47,10 +47,8 @@ convert quickly between the 3 number bases I use most (10, 16, &&
 64).  It turned out that it was trivial to handle any number base 
 that could be represented as characters.  High-bit ASCII proved 
 somewhat problemmatic but at least BaseCnv can convert between any
-possible base between 2 && 128 which is much more than I originally
-needed.  I'm quite happy with it && employ b64() too much now =).
-I'm totally addicted to bass!  Sometimes I intentionally misspell
-'base' as 'bass' because I'm a dork who likes bass in my face.
+possible base between 2 && 64.  I'm happy with it && employ b64()
+in places I probably shouldn't now =).
 
 =head1 USAGE
 
@@ -123,13 +121,12 @@ string name matching one of the following predefined digit sets:
     'b62' => ['0'..'9', 'a'..'z', 'A'..'Z']
     '64'  => ['A'..'Z', 'a'..'z', '0'..'9', '+', '/'] # MIME::Base64
     'b64' => ['0'..'9', 'A'..'Z', 'a'..'z', '.', '_'] 
-    '128' => ['0'..'9', 'A'..'Z', 'a'..'z', '.', '_'... higher chars
 
 If no \@newd list or digit set name is provided as a parameter, 
 dig() returns the current character list.  It's fine to have many
 more characters in your current digit set than will be used with
-your conversions (eg. using dig('128') works fine for any cnv()
-call with $from && $tobs params less than or equal to 128).
+your conversions (eg. using dig('b64') works fine for any cnv()
+call with $from && $tobs params less than or equal to 64).
 
 An example of a \@newd parameter for a specified alternate digit 
 set for base 9 conversions is:
@@ -139,8 +136,8 @@ set for base 9 conversions is:
 =head2 diginit()
 
 Resets the used digit list to the initial default order
-of the predefined digit set: '128'.  This is simply a shortcut for
-calling dig('128') for reinitialization purposes.
+of the predefined digit set: 'b64'.  This is simply a shortcut for
+calling dig('b64') for reinitialization purposes.
 
 =head2 summ($numb)
 
@@ -209,9 +206,11 @@ Revision history for Perl extension Math::BaseCnv:
 
 =over 4
 
-=item - 1.2.4CCJFl7  Sun Dec 12 19:15:47:07 2004
+=item - 1.2.54HK3pB  Sun Apr 17 20:03:51:11 2005
 
-* made only bin/cnv executable to go into EXE_FILES
+* removed 128 digit-set since some hi-bit chars cause probs on Win32
+
+* made bin/cnv only executable to go in EXE_FILES
 
 * made Math::BaseCalc a link in pod && updated License
 
@@ -307,11 +306,10 @@ or uncompress the package && run the standard:
 
 Most source code should be Free!
   Code I have lawful authority over is && shall be!
-Copyright: (c) 2003-2004, Pip Stuart.
+Copyright: (c) 2003-2005, Pip Stuart.
 Copyleft :  This software is licensed under the GNU General Public
-  License (version 2), && as such comes with NO WARRANTY.  Please
-  consult the Free Software Foundation (http://FSF.Org) for
-  important information about your freedom.
+  License (version 2).  Please consult the Free Software Foundation
+  (http://FSF.Org) for important information about your freedom.
 
 =head1 AUTHOR
 
@@ -332,7 +330,7 @@ our %EXPORT_TAGS = ( 'all' =>[ qw(cnv dec hex b10 b64 dig diginit summ fact choo
                      'b64' =>[ qw(cnv         b10 b64            ) ],
                      'dig' =>[ qw(                    dig diginit) ],
                      'sfc' =>[ qw(summ fact choo                 ) ] );
-our $VERSION     = '1.2.4CCJFl7'; # major . minor . PipTimeStamp
+our $VERSION     = '1.2.54HK3pB'; # major . minor . PipTimeStamp
 our $PTVR        = $VERSION; $PTVR =~ s/^\d+\.\d+\.//; # strip major && minor
 # Please see `perldoc Time::PT` for an explanation of $PTVR.
 
@@ -347,12 +345,6 @@ my %digsets = (
   'b62' => ['0'..'9', 'a'..'z', 'A'..'Z'],
   '64'  => ['A'..'Z', 'a'..'z', '0'..'9', '+', '/'], # 0-63 from MIME::Base64
   'b64' => ['0'..'9', 'A'..'Z', 'a'..'z', '.', '_'], # month:C:12 day:V:31
-  '128' => ['0'..'9', 'A'..'Z', 'a'..'z', '.', '_',  #  hour:N:23 min:x:59
-    '', '', '', '', '', '', '', '', '', '', '', '', '', #  64-76
-    '', '', '', '', '', '', '', '', '', '', '', '', '', #  77-89
-    '!', '#', '$', '%', '&', '(', ')', '*', '+', ',', '-', '/', ':', #  90-102
-    ';', '<', '=', '>', '@', '[', '\\',']', '^', '?', '{', '|', '}', # 103-115
-    '~', '', 'Ä', 'Å', 'Ç', 'É', 'Ñ', 'Ö', 'Ü', 'á', 'à', 'â'], #116-127
 );
 
 sub bs2init { # build hash of digit char keys to array index values
@@ -362,7 +354,7 @@ sub bs2init { # build hash of digit char keys to array index values
   }
 }
 sub diginit { # reset digit character list to initial Dflt
-  $d2bs = '128'; bs2init();
+  $d2bs = 'b64'; bs2init();
 }
 sub dig { # assign a new digit character list
   return( @{ $digsets{$d2bs} } ) unless(@_);
