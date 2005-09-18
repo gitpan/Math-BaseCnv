@@ -18,94 +18,92 @@
 #     hex() builtin is the opposite behavior of mine =).
 #   Before `make install' is performed this script should be run with
 #     `make test'.  After `make install' it should work as `perl test.pl'.
-
-BEGIN { $| = 1; print "0..21\n"; }
-END   { print "not ok 1\n" unless($loaded); }
 use Math::BaseCnv qw(:all);
+use Test;
+my $calc; my $rslt; my $tnum = 1; my $lded = 1; my $tvrb = 0; my $tsts = 31;
+END { print "not " unless($lded); print "ok $tsts\n"; }
+plan('tests' => $tsts);
+&rprt(1);
 
-my $calc; my $result; my $TESTNUM = 0;
-$loaded = 1;
-&report(1);
-
-sub report { # prints test progress
-  my $bad = !shift;
-  print "not " x $bad;
-  print "ok ", $TESTNUM++, "\n";
-  print @_ if $ENV{TEST_VERBOSE} and $bad;
+sub rprt { # prints a rprt of test progress
+  my $badd = !shift();
+  print 'not ' if($badd);
+  print "ok ", $tnum++, "\n";
+  print @_ if(($ENV{'TEST_VERBOSE'} || $tvrb) && $badd);
 }
 
 #$calc = new Math::BaseCalc(digits=>[0,1]);
 dig( [ '0', '1' ] );
 $calc = 2;
-&report($calc);
+&rprt($calc);
 
-#$result = $calc->from_base('01101');
-$result = cnv('01101', 2, 10);
-&report($result == 13, "$result\n");
+#$rslt = $calc->from_base('01101');
+$rslt = cnv('01101', 2, 10);
+&rprt($rslt == 13, "$rslt\n");
 
 #$calc->digits('bin');
-#$result = $calc->from_base('1101');
+#$rslt = $calc->from_base('1101');
 dig('bin'); 
-$result = cnv('1101', 2, 10);
-&report($result == 13, "$result\n");
+$rslt = cnv('1101', 2, 10);
+&rprt($rslt == 13, "$rslt\n");
 
-#$result = $calc->to_base(13);
-$result = cnv(13, 2); # omitting last param assumes first is already 10 to ?
-&report($result eq '1101', "$result\n");
+#$rslt = $calc->to_base(13);
+$rslt = cnv(13, 2); # omitting last param assumes first is already 10 to ?
+&rprt($rslt eq '1101', "$rslt\n");
 
 #$calc->digits('hex');
-#$result = $calc->to_base(46);
+#$rslt = $calc->to_base(46);
 dig('hex'); 
-$result = hex(46);
-&report($result eq '2e', "$result\n");
+$rslt = hex(46);
+&rprt($rslt eq '2e', "$rslt\n");
 
 #$calc->digits([qw(i  a m  v e r y  p u n k)]);
-#$result = $calc->to_base(13933);
+#$rslt = $calc->to_base(13933);
 dig( [ qw(i  a m  v e r y  p u n k) ] ); 
-#$result = cnv(13933, 10, 11); 
-$result = cnv(13933, scalar( dig() )); # empty dig() returns the char array
-&report($result eq 'krap', "$result\n");
+#$rslt = cnv(13933, 10, 11); 
+$rslt = cnv(13933, scalar( dig() )); # empty dig() returns the char array
+&rprt($rslt eq 'krap', "$rslt\n");
 
 #$calc->digits('hex');
-#$result = $calc->to_base('-17');
+#$rslt = $calc->to_base('-17');
 dig('hex'); 
-$result = hex(-17);
-&report($result eq '-11', "$result\n");
+$rslt = hex(-17);
+&rprt($rslt eq '-11', "$rslt\n");
 
 #$calc->digits('hex');
-#$result = $calc->from_base('-11');
+#$rslt = $calc->from_base('-11');
 dig('hex'); 
-$result = dec(-11);
-&report($result eq '-17', "$result\n");
+$rslt = dec(-11);
+&rprt($rslt eq '-17', "$rslt\n");
 
 # no fractions in BaseCnv!  ...
 #  $calc->digits('hex');
-#  $result = $calc->from_base('-11.05');
-#  &report($result eq '-17.01953125', "$result\n");
+#  $rslt = $calc->from_base('-11.05');
+#  &rprt($rslt eq '-17.01953125', "$rslt\n");
 #  
 #  $calc->digits([0..6]);
-#  $result = $calc->from_base('0.1');
-#  &report($result eq (1/7), "$result\n");
+#  $rslt = $calc->from_base('0.1');
+#  &rprt($rslt eq (1/7), "$rslt\n");
 
 # ... so do two more dig tests instead
 dig( [ qw(i  a m  v e r y  p u n k) ] ); 
-$result = cnv(13542, scalar( dig() )); 
-&report($result eq 'kaka', "$result\n");
+$rslt = cnv(13542, scalar( dig() )); 
+&rprt($rslt eq 'kaka', "$rslt\n");
 
 dig( [ qw( n a c h o z   y u m ) ] );
-$result = cnv(lc('MunchYummyNachoChz'), 9, 10) / (10**17);
-$result = substr($result, 0, 10);
-&report($result eq '1.46443919', "$result\n");
+$rslt = cnv(lc('MunchYummyNachoChz'), 9, 10) / (10**17);
+$rslt = substr($rslt, 0, 10);
+&rprt($rslt eq '1.46443919', "$rslt\n");
 
 # Test large numbers && dec/hex functions
 #$calc->digits('hex');
 #my $r1 = $calc->to_base(2**55 + 5);
-#$result = $calc->from_base($calc->to_base(2**55 + 5));
-#warn "res: $r1, $result";
+#$rslt = $calc->from_base($calc->to_base(2**55 + 5));
+#warn "res: $r1, $rslt";
 dig('hex'); 
-$calc   =       hex(2**55 + 5);
-$result =   dec(hex(2**55 + 5));
-&report($result eq (2**55 + 5), "$result\n");
+$calc =     hex(2**5 + 5);
+$rslt = dec(hex(2**5 + 5));
+&rprt($rslt eq (2**5 + 5), "$rslt\n");
 
 #$calc->digits('bin');
 #my $first  = $calc->from_base('1110111');
@@ -115,34 +113,58 @@ dig('bin');
 my $first  = cnv('1110111',           2, 10);
 my $second = cnv('1010110',           2, 10);
 my $third  = cnv(($first * $second),      2);
-&report($third eq '10011111111010', "$third\n");
+&rprt($third eq '10011111111010', "$third\n");
 
 # Test b10/b64 functions
 diginit();
-$result = b64(1234567890); # 10 base10 digits is only 6 bass64 digits
-&report($result eq '19bWBI', "$result\n");
+$rslt = b64(1234567890); # 10 base10 digits is only 6 bass64 digits
+&rprt($rslt eq '19bWBI', "$rslt\n");
 
-$result = b10('TheBootyBoys.com') / (10**28); # Around The Corner =)
-$result = substr($result, 0, 10);
-&report($result eq '3.67441470', "$result\n");
+$rslt = b10('TheBootyBoys.com') / (10**28); # Around The Corner =)
+$rslt = substr($rslt, 0, 10);
+&rprt($rslt eq '3.67441470', "$rslt\n");
 
-$result = b10( b64( 127 ) );
-&report($result eq '127', "$result\n");
+$rslt = b10(b64(127));
+&rprt($rslt eq '127', "$rslt\n");
 
-$result = fact( 7 );
-&report($result eq '5040', "$result\n");
+$rslt = b10(b64(4096));
+&rprt($rslt eq '4096', "$rslt\n");
 
-$result = fact( 8 );
-&report($result eq '40320', "$result\n");
+$rslt = b10(b64(65535));
+&rprt($rslt eq '65535', "$rslt\n");
 
-$result = choo( 15, 7 );
-&report($result eq '6435', "$result\n");
+$rslt = fact(3);
+&rprt($rslt eq '6', "$rslt\n");
 
-$result = choo( 13, 5 );
-&report($result eq '1287', "$result\n");
+$rslt = fact(4);
+&rprt($rslt eq '24', "$rslt\n");
 
-$result = summ( 7 );
-&report($result eq '28', "$result\n");
+$rslt = fact(7);
+&rprt($rslt eq '5040', "$rslt\n");
 
-$result = summ( 15 );
-&report($result eq '120', "$result\n");
+$rslt = fact(8);
+&rprt($rslt eq '40320', "$rslt\n");
+
+$rslt = choo(7, 3);
+&rprt($rslt eq '35', "$rslt\n");
+
+$rslt = choo(15, 7);
+&rprt($rslt eq '6435', "$rslt\n");
+
+$rslt = choo(13, 5);
+&rprt($rslt eq '1287', "$rslt\n");
+
+$rslt = choo(127, 3);
+&rprt($rslt eq '333375', "$rslt\n");
+
+$rslt = summ(7);
+&rprt($rslt eq '28', "$rslt\n");
+
+$rslt = summ(8);
+&rprt($rslt eq '36', "$rslt\n");
+
+$rslt = summ(15);
+&rprt($rslt eq '120', "$rslt\n");
+
+$rslt = summ(127);
+&rprt($rslt eq '8128', "$rslt\n");

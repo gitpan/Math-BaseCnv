@@ -8,8 +8,8 @@ Math::BaseCnv - fast functions to convert between number bases
 
 =head1 VERSION
 
-This documentation refers to version 1.2.54HK3pB of 
-Math::BaseCnv, which was released on Sun Apr 17 20:03:51:11 2005.
+This documentation refers to version 1.2.59IBlgw of 
+Math::BaseCnv, which was released on Sun Sep 18 11:47:42:58 2005.
 
 =head1 SYNOPSIS
 
@@ -206,6 +206,14 @@ Revision history for Perl extension Math::BaseCnv:
 
 =over 4
 
+=item - 1.2.59IBlgw  Sun Sep 18 11:47:42:58 2005
+
+* testing just using Module::Build instead of MakeMaker
+
+* fixed test 12 which was failing on AMD64
+
+* added Build.PL to pkg
+
 =item - 1.2.54HK3pB  Sun Apr 17 20:03:51:11 2005
 
 * removed 128 digit-set since some hi-bit chars cause probs on Win32
@@ -298,9 +306,9 @@ Please run:
 
     `perl -MCPAN -e "install Math::BaseCnv"`
 
-or uncompress the package && run the standard:
+or uncompress the package && run:
 
-    `perl Makefile.PL; make; make test; make install`
+    `perl Build.PL; perl Build; perl Build test; perl Build install`
 
 =head1 LICENSE
 
@@ -330,7 +338,7 @@ our %EXPORT_TAGS = ( 'all' =>[ qw(cnv dec hex b10 b64 dig diginit summ fact choo
                      'b64' =>[ qw(cnv         b10 b64            ) ],
                      'dig' =>[ qw(                    dig diginit) ],
                      'sfc' =>[ qw(summ fact choo                 ) ] );
-our $VERSION     = '1.2.54HK3pB'; # major . minor . PipTimeStamp
+our $VERSION     = '1.2.59IBlgw'; # major . minor . PipTimeStamp
 our $PTVR        = $VERSION; $PTVR =~ s/^\d+\.\d+\.//; # strip major && minor
 # Please see `perldoc Time::PT` for an explanation of $PTVR.
 
