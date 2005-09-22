@@ -11,4 +11,5 @@ bin/fact
 bin/choo
 MANIFEST.SKIP
 README
-Build.PL
+Makefile.PL
+BuildPL
