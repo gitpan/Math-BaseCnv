@@ -1,12 +1,11 @@
 CHANGES
     Revision history for Perl extension Math::BaseCnv:
 
-    - 1.4.75O58nW Thu May 24 05:08:49:32 2007
-      * added Test::Pod(::Coverage) tests && PREREQ entries
+    - 1.4.75O5JG0 Thu May 24 05:19:16:00 2007
+      * added Test::Pod(::Coverage)? tests && PREREQ entries
 
-    - 1.4.75N0H5e Wed May 23 00:17:05:40 2007
-      * added b85 for IPv6, gen'd META.yml, rm'd BuildPL for now, up'd minor
-      ver
+      * added b85 for IPv6, gen'd META.yml (w/ newline before EOF), rm'd
+      BuildPL for now, up'd minor ver
 
     - 1.2.68J9uJQ Sat Aug 19 09:56:19:26 2006
       * added b64sort() && put pod at bottom

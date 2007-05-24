@@ -13,7 +13,7 @@ our %EXPORT_TAGS = ( 'all' =>[ qw(cnv dec hex b10 b64 b64sort dig diginit summ f
                      'b64' =>[ qw(cnv         b10 b64 b64sort            ) ],
                      'dig' =>[ qw(                            dig diginit) ],
                      'sfc' =>[ qw(                         summ fact choo) ] );
-our $VERSION     = '1.4.75O58nW'; our $PTVR = $VERSION; $PTVR =~ s/^\d+\.\d+\.//; # Please see `perldoc Time::PT` for an explanation of $PTVR.
+our $VERSION     = '1.4.75O5JG0'; our $PTVR = $VERSION; $PTVR =~ s/^\d+\.\d+\.//; # Please see `perldoc Time::PT` for an explanation of $PTVR.
 my $d2bs = ''; my %bs2d = (); my $nega = '';
 my %digsets = (
   'usr' => [], # this will be assigned if a dig(\@newd) call is made
@@ -98,7 +98,7 @@ Math::BaseCnv - fast functions to CoNVert between number Bases
 
 =head1 VERSION
 
-This documentation refers to version 1.4.75O58nW of Math::BaseCnv, which was released on Thu May 24 05:08:49:32 2007.
+This documentation refers to version 1.4.75O5JG0 of Math::BaseCnv, which was released on Thu May 24 05:19:16:00 2007.
 
 =head1 SYNOPSIS
 
@@ -267,13 +267,11 @@ Revision history for Perl extension Math::BaseCnv:
 
 =over 2
 
-=item - 1.4.75O58nW  Thu May 24 05:08:49:32 2007
+=item - 1.4.75O5JG0  Thu May 24 05:19:16:00 2007
 
-* added Test::Pod(::Coverage) tests && PREREQ entries
+* added Test::Pod(::Coverage)? tests && PREREQ entries
 
-=item - 1.4.75N0H5e  Wed May 23 00:17:05:40 2007
-
-* added b85 for IPv6, gen'd META.yml, rm'd BuildPL for now, up'd minor ver
+* added b85 for IPv6, gen'd META.yml (w/ newline before EOF), rm'd BuildPL for now, up'd minor ver
 
 =item - 1.2.68J9uJQ  Sat Aug 19 09:56:19:26 2006
 
