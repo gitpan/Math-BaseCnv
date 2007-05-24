@@ -1,7 +1,7 @@
 --- #YAML:1.0
 name: Math-BaseCnv
 abstract: fast functions to CoNVert between number Bases
-version: 1.4.75N0H5e
+version: 1.4.75O58nW
 author:
   - Pip Stuart <Pip@CPAN.Org>
 license: gpl
@@ -11,6 +11,8 @@ requires:
 recommends:
 build_requires:
   Test: 0
+  Test::Pod: 0
+  Test::Pod::Coverage: 0
 urls:
   license: HTTP://FSF.Org/licensing/licenses/gpl.txt
 meta-spec:
