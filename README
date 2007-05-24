@@ -2,8 +2,8 @@ NAME
     Math::BaseCnv - fast functions to CoNVert between number Bases
 
 VERSION
-    This documentation refers to version 1.4.75O5JG0 of Math::BaseCnv, which
-    was released on Thu May 24 05:19:16:00 2007.
+    This documentation refers to version 1.4.75O6Pbr of Math::BaseCnv, which
+    was released on Thu May 24 06:25:37:53 2007.
 
 SYNOPSIS
       use Math::BaseCnv;
@@ -186,11 +186,11 @@ NOTES
 CHANGES
     Revision history for Perl extension Math::BaseCnv:
 
-    - 1.4.75O5JG0 Thu May 24 05:19:16:00 2007
+    - 1.4.75O6Pbr Thu May 24 06:25:37:53 2007
       * added Test::Pod(::Coverage)? tests && PREREQ entries
 
-      * added b85 for IPv6, gen'd META.yml (w/ newline before EOF), rm'd
-      BuildPL for now, up'd minor ver
+      * added b85 for IPv6, gen'd META.yml (w/ newline before EOF), up'd
+      minor ver
 
     - 1.2.68J9uJQ Sat Aug 19 09:56:19:26 2006
       * added b64sort() && put pod at bottom
@@ -280,7 +280,9 @@ INSTALL
 
     or uncompress the package && run:
 
-      `perl Makefile.PL; make; make test; make install`
+      `perl Makefile.PL;       make;       make test;       make install`
+        or if you don't have  `make` but Module::Build is installed
+      `perl    Build.PL; perl Build; perl Build test; perl Build install`
 
 LICENSE
     Most source code should be Free! Code I have lawful authority over is &&
