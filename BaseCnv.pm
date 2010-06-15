@@ -14,7 +14,7 @@ our %EXPORT_TAGS = ( 'all' =>[ qw(cnv dec hex b10 b64 b64sort dig diginit summ f
                      'b64' =>[ qw(cnv         b10 b64 b64sort            ) ],
                      'dig' =>[ qw(                            dig diginit) ],
                      'sfc' =>[ qw(                         summ fact choo) ] );
-our $VERSION     = '1.4.A6FAbEb'; our $PTVR = $VERSION; $PTVR =~ s/^\d+\.\d+\.//; # Please see `perldoc Time::PT` for an explanation of $PTVR.
+our $VERSION     = '1.6.A6FGHKE'; our $PTVR = $VERSION; $PTVR =~ s/^\d+\.\d+\.//; # Please see `perldoc Time::PT` for an explanation of $PTVR.
 my $d2bs = ''; my %bs2d = (); my $nega = '';
 my %digsets = (
   'usr' => [], # this will be assigned if a dig(\@newd) call is made
@@ -103,7 +103,7 @@ Math::BaseCnv - fast functions to CoNVert between number Bases
 
 =head1 VERSION
 
-This documentation refers to version 1.4.A6FAbEb of Math::BaseCnv, which was released on Tue Jun 15 10:37:14:37 2010.
+This documentation refers to version 1.6.A6FGHKE of Math::BaseCnv, which was released on Tue Jun 15 16:17:20:14 2010.
 
 =head1 SYNOPSIS
 
@@ -278,6 +278,10 @@ Thank you.  TTFN.
 Revision history for Perl extension Math::BaseCnv:
 
 =over 2
+
+=item - 1.6.A6FGHKE  Tue Jun 15 16:17:20:14 2010
+
+* bumped minor version number so they'll keep ascending (without PT comprehension)
 
 =item - 1.4.A6FAbEb  Tue Jun 15 10:37:14:37 2010
 

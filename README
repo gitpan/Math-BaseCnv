@@ -1,6 +1,6 @@
 VERSION
-    This documentation refers to version 1.4.A6FAbEb of Math::BaseCnv, which
-    was released on Tue Jun 15 10:37:14:37 2010.
+    This documentation refers to version 1.6.A6FGHKE of Math::BaseCnv, which
+    was released on Tue Jun 15 16:17:20:14 2010.
 
 SYNOPSIS
       use Math::BaseCnv;
@@ -189,6 +189,10 @@ NOTES
 
 CHANGES
     Revision history for Perl extension Math::BaseCnv:
+
+    - 1.6.A6FGHKE Tue Jun 15 16:17:20:14 2010
+      * bumped minor version number so they'll keep ascending (without PT
+      comprehension)
 
     - 1.4.A6FAbEb Tue Jun 15 10:37:14:37 2010
       * added Math::BigInt code for >64-bit number-base conversions
