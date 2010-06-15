@@ -1,12 +1,13 @@
 --- #YAML:1.0
 name: Math-BaseCnv
 abstract: fast functions to CoNVert between number Bases
-version: 1.4.75O6Pbr
+version: 1.4.A6FAbEb
 author:
   - Pip Stuart <Pip@CPAN.Org>
 license: gpl
 distribution_type: module
 requires:
+  Math::BigInt: 0
   Memoize: 0
 recommends:
 build_requires:
@@ -18,4 +19,4 @@ urls:
 meta-spec:
   version: 1.3
   url: HTTP://Module-Build.SourceForge.Net/META-spec-v1.3.html
-generated_by: e pkg v1.0.75L6d1c
+generated_by: e pkg v1.0.A2RJrKV

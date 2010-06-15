@@ -3,12 +3,14 @@ use ExtUtils::MakeMaker;
 #   the contents of the Makefile that is written.
 WriteMakefile(
   'NAME'         => 'Math::BaseCnv',
-  'VERSION'      => '1.4.75O6Pbr',
+  'VERSION'      => '1.4.A6FAbEb',
   'ABSTRACT'     => 'fast functions to CoNVert between number Bases',
   'AUTHOR'       => 'Pip Stuart <Pip@CPAN.Org>',
   'EXE_FILES'    => [ 
+                      'bin/cnv',
                     ],
   'PREREQ_PM'    => {
+    'Math::BigInt'                   => 0,
     'Memoize'                        => 0,
     'Test'                           => 0,
     'Test::Pod'                      => 0,

@@ -1,9 +1,10 @@
-# 3159mLT - Math::BaseCnv.pm created by Pip Stuart <Pip@CPAN.Org> to CoNVert between arbitrary number Bases.  I'm totally addicted to bass!
+# 3159mLT: Math::BaseCnv.pm created by Pip Stuart <Pip@CPAN.Org> to CoNVert between arbitrary number Bases.  I'm totally addicted to bass!
 package Math::BaseCnv;
 require Exporter;
 use strict;
 use warnings;
 use base qw(Exporter);
+use Math::BigInt;
 use Memoize; memoize('summ'); memoize('fact'); memoize('choo');
 # only export cnv() for 'use Math::BaseCnv;' && all other stuff optionally
 our @EXPORT      =             qw(cnv                                    )    ;
@@ -13,7 +14,7 @@ our %EXPORT_TAGS = ( 'all' =>[ qw(cnv dec hex b10 b64 b64sort dig diginit summ f
                      'b64' =>[ qw(cnv         b10 b64 b64sort            ) ],
                      'dig' =>[ qw(                            dig diginit) ],
                      'sfc' =>[ qw(                         summ fact choo) ] );
-our $VERSION     = '1.4.75O6Pbr'; our $PTVR = $VERSION; $PTVR =~ s/^\d+\.\d+\.//; # Please see `perldoc Time::PT` for an explanation of $PTVR.
+our $VERSION     = '1.4.A6FAbEb'; our $PTVR = $VERSION; $PTVR =~ s/^\d+\.\d+\.//; # Please see `perldoc Time::PT` for an explanation of $PTVR.
 my $d2bs = ''; my %bs2d = (); my $nega = '';
 my %digsets = (
   'usr' => [], # this will be assigned if a dig(\@newd) call is made
@@ -23,8 +24,15 @@ my %digsets = (
   'hex' => ['0'..'9', 'a'..'f'],
   'HEX' => ['0'..'9', 'A'..'F'],
   'b62' => ['0'..'9', 'a'..'z', 'A'..'Z'],
-  'm64' => ['A'..'Z', 'a'..'z', '0'..'9', '+', '/'], # 0-63 from MIME::Base64
   'b64' => ['0'..'9', 'A'..'Z', 'a'..'z', '.', '_'], # month:C:12 day:V:31
+  'm64' => ['A'..'Z', 'a'..'z', '0'..'9', '+', '/'], # 0-63 from MIME::Base64
+  'iru' => ['A'..'Z', 'a'..'z', '0'..'9', '[', ']'], # P10 server-server protocol used by IRCu daemon
+  'url' => ['A'..'Z', 'a'..'z', '0'..'9', '*', '-'], # URL style which avoids %2B && %2F expansions of '+' && '/' respectively
+  'rex' => ['A'..'Z', 'a'..'z', '0'..'9', '!', '-'], # Regular EXpression variant
+  'id0' => ['A'..'Z', 'a'..'z', '0'..'9', '_', '-'], # IDentifier style 0
+  'id1' => ['A'..'Z', 'a'..'z', '0'..'9', '.', '_'], # IDentifier style 1
+  'xnt' => ['A'..'Z', 'a'..'z', '0'..'9', '.', '-'], # XML Name Tokens (Nmtoken)
+  'xid' => ['A'..'Z', 'a'..'z', '0'..'9', '_', ':'], # XML identifiers (Name   )
   'b85' => ['0'..'9', 'A'..'Z', 'a'..'z', '!', '#',  # RFC 1924 for IPv6 addresses, might need to return Math::BigInt objs
             '$', '%', '&', '(', ')', '*', '+', '-', ';', '<', '=', '>', '?', '@', '^', '_', '`', '{', '|', '}', '~'],
 );
@@ -35,24 +43,21 @@ sub dig { # assign a new digit character list
   if(ref $_[0]) { $d2bs = 'usr'; $digsets{$d2bs} = [ @{ shift() } ]; }
   else          { my $setn = shift(); return(-1) unless(exists $digsets{$setn}); $d2bs = $setn; }
   diginit() unless(@{ $digsets{$d2bs} });
-  bs2init();
-}
+  bs2init(); }
 sub cnv__10 { # convert from some number base to decimal fast
-  my $t = shift || '0'; my $s = shift || 64; my $n = 0;
+  my $t = shift || '0'; my $s = shift || 64; my $n = Math::BigInt->new();
   $nega = ''; $nega = '-' if($t =~ s/^-//);
-  foreach(split(//, $t)) { return(-1) unless(exists $bs2d{$_}); }
-  while(length($t)) { $n += $bs2d{substr($t,0,1,'')}; $n *= $s; } 
-  return($nega . int($n / $s));
-}
+  for(split(//, $t)) { return(-1) unless(exists $bs2d{$_}); }
+  while(length($t)) { $n += $bs2d{substr($t,0,1,'')}; $n *= $s; }
+  return($nega . int($n / $s)); }
 sub cnv10__ { # convert from decimal to some number base fast
-  my $n = shift || 0; my $s = shift || 64; my $t = '';
+  my $n = Math::BigInt->new(shift || '0'); my $s = shift || 64; my $t = '';
   return(-1) if($s > @{ $digsets{$d2bs} });
   $nega = ''; $nega = '-' if($n =~ s/^-//);
   while($n) { $t = $digsets{$d2bs}->[($n % $s)] . $t; $n = int($n / $s); }
   if(length($t)) { $t = $nega . $t;           }
   else           { $t = $digsets{$d2bs}->[0]; }
-  return($t);
-}
+  return($t); }
 sub dec     { return(cnv__10(uc(shift), 16)); }#shortcut for hexadecimal -> decimal
 sub hex     { return(cnv10__(   shift,  16)); }#shortcut for decimal     -> hex
 sub b10     { return(cnv__10(   shift,  64)); }#shortcut for base64      -> decimal
@@ -77,28 +82,28 @@ sub cnv     { # CoNVert between any number base
   return($numb);
 }
 sub summ { # simple function to calculate summation down to 1
-  my $summ = shift; return(0) unless(defined($summ) && $summ && ($summ > 0)); my $answ = $summ; while(--$summ) { $answ += $summ; } return($answ);
+  my $summ = shift; return(0) unless(defined($summ) && $summ && ($summ > 0)); my $answ = Math::BigInt->new($summ);while(--$summ){$answ +=$summ;} return($answ);
 }
 sub fact { # simple function to calculate factorials
-  my $fact = shift; return(0) unless(defined($fact) && $fact && ($fact > 0)); my $answ = $fact; while(--$fact) { $answ *= $fact; } return($answ);
+  my $fact = shift; return(0) unless(defined($fact) && $fact && ($fact > 0)); my $answ = Math::BigInt->new($fact);while(--$fact){$answ *=$fact;} return($answ);
 }
 sub choo { # simple function to calculate n choose m  (i.e., (n! / (m! * (n - m)!)))
-  my $ennn = shift; my $emmm = shift; return(0) unless(defined($ennn) && defined($emmm) && $ennn && $emmm && ($ennn != $emmm));
-  ($ennn, $emmm) = ($emmm, $ennn) if($ennn < $emmm); my $diff = $ennn - $emmm; my $answ = fact($ennn); my $mfct = fact($emmm); my $dfct = fact($diff);
+  my $ennn = Math::BigInt->new(shift); my $emmm = Math::BigInt->new(shift);
+  return(0) unless(defined($ennn) && defined($emmm) && $ennn && $emmm && ($ennn != $emmm));
+  ($ennn, $emmm) = ($emmm, $ennn) if($ennn < $emmm); my $diff = Math::BigInt->new($ennn - $emmm); my $answ = Math::BigInt->new(fact($ennn));
+                                                     my $mfct = Math::BigInt->new( fact(  $emmm));my $dfct = Math::BigInt->new(fact($diff));
   $mfct *= $dfct; return(0) unless($mfct);
   $answ /= $mfct; return($answ);
 }
 diginit(); # initialize the Dflt digit set whenever BaseCnv is used
-
 127;
-
 =head1 NAME
 
 Math::BaseCnv - fast functions to CoNVert between number Bases
 
 =head1 VERSION
 
-This documentation refers to version 1.4.75O6Pbr of Math::BaseCnv, which was released on Thu May 24 06:25:37:53 2007.
+This documentation refers to version 1.4.A6FAbEb of Math::BaseCnv, which was released on Tue Jun 15 10:37:14:37 2010.
 
 =head1 SYNOPSIS
 
@@ -187,8 +192,15 @@ following predefined digit sets:
   'hex' => ['0'..'9', 'a'..'f']
   'HEX' => ['0'..'9', 'A'..'F']
   'b62' => ['0'..'9', 'a'..'z', 'A'..'Z']
+  'b64' => ['0'..'9', 'A'..'Z', 'a'..'z', '.', '_']
   'm64' => ['A'..'Z', 'a'..'z', '0'..'9', '+', '/'] # MIME::Base64
-  'b64' => ['0'..'9', 'A'..'Z', 'a'..'z', '.', '_'] 
+  'iru' => ['A'..'Z', 'a'..'z', '0'..'9', '[', ']'] # IRCu
+  'url' => ['A'..'Z', 'a'..'z', '0'..'9', '*', '-'] # URL
+  'rex' => ['A'..'Z', 'a'..'z', '0'..'9', '!', '-'] # RegEx
+  'id0' => ['A'..'Z', 'a'..'z', '0'..'9', '_', '-'] # ID 0
+  'id1' => ['A'..'Z', 'a'..'z', '0'..'9', '.', '_'] # ID 1
+  'xnt' => ['A'..'Z', 'a'..'z', '0'..'9', '.', '-'] # XML Nmtoken
+  'xid' => ['A'..'Z', 'a'..'z', '0'..'9', '_', ':'] # XML ID Name
   'b85' => ['0'..'9', 'A'..'Z', 'a'..'z', '!', '#', # RFC 1924 for
             '$', '%', '&', '(', ')', '*', '+', '-', #   IPv6 addrs
             ';', '<', '=', '>', '?', '@', '^', '_', #   like in
@@ -266,6 +278,12 @@ Thank you.  TTFN.
 Revision history for Perl extension Math::BaseCnv:
 
 =over 2
+
+=item - 1.4.A6FAbEb  Tue Jun 15 10:37:14:37 2010
+
+* added Math::BigInt code for >64-bit number-base conversions
+
+* added a bunch more DigitSets: IRCu, URL, RegEx, identifier variants, XML Nmtoken, && XML ID Name
 
 =item - 1.4.75O6Pbr  Thu May 24 06:25:37:53 2007
 
@@ -391,7 +409,7 @@ or uncompress the package && run:
 
 Most source code should be Free!  Code I have lawful authority over is && shall be!
 Copyright: (c) 2003-2007, Pip Stuart.
-Copyleft :  This software is licensed under the GNU General Public License (version 2).  Please consult the Free Software Foundation (HTTP://FSF.Org)
+Copyleft :  This software is licensed under the GNU General Public License (version 3).  Please consult the Free Software Foundation (HTTP://FSF.Org)
   for important information about your freedom.
 
 =head1 AUTHOR

@@ -1,9 +1,6 @@
-NAME
-    Math::BaseCnv - fast functions to CoNVert between number Bases
-
 VERSION
-    This documentation refers to version 1.4.75O6Pbr of Math::BaseCnv, which
-    was released on Thu May 24 06:25:37:53 2007.
+    This documentation refers to version 1.4.A6FAbEb of Math::BaseCnv, which
+    was released on Tue Jun 15 10:37:14:37 2010.
 
 SYNOPSIS
       use Math::BaseCnv;
@@ -97,8 +94,15 @@ USAGE
       'hex' => ['0'..'9', 'a'..'f']
       'HEX' => ['0'..'9', 'A'..'F']
       'b62' => ['0'..'9', 'a'..'z', 'A'..'Z']
+      'b64' => ['0'..'9', 'A'..'Z', 'a'..'z', '.', '_']
       'm64' => ['A'..'Z', 'a'..'z', '0'..'9', '+', '/'] # MIME::Base64
-      'b64' => ['0'..'9', 'A'..'Z', 'a'..'z', '.', '_'] 
+      'iru' => ['A'..'Z', 'a'..'z', '0'..'9', '[', ']'] # IRCu
+      'url' => ['A'..'Z', 'a'..'z', '0'..'9', '*', '-'] # URL
+      'rex' => ['A'..'Z', 'a'..'z', '0'..'9', '!', '-'] # RegEx
+      'id0' => ['A'..'Z', 'a'..'z', '0'..'9', '_', '-'] # ID 0
+      'id1' => ['A'..'Z', 'a'..'z', '0'..'9', '.', '_'] # ID 1
+      'xnt' => ['A'..'Z', 'a'..'z', '0'..'9', '.', '-'] # XML Nmtoken
+      'xid' => ['A'..'Z', 'a'..'z', '0'..'9', '_', ':'] # XML ID Name
       'b85' => ['0'..'9', 'A'..'Z', 'a'..'z', '!', '#', # RFC 1924 for
                 '$', '%', '&', '(', ')', '*', '+', '-', #   IPv6 addrs
                 ';', '<', '=', '>', '?', '@', '^', '_', #   like in
@@ -185,6 +189,12 @@ NOTES
 
 CHANGES
     Revision history for Perl extension Math::BaseCnv:
+
+    - 1.4.A6FAbEb Tue Jun 15 10:37:14:37 2010
+      * added Math::BigInt code for >64-bit number-base conversions
+
+      * added a bunch more DigitSets: IRCu, URL, RegEx, identifier variants,
+      XML Nmtoken, && XML ID Name
 
     - 1.4.75O6Pbr Thu May 24 06:25:37:53 2007
       * added Test::Pod(::Coverage)? tests && PREREQ entries
@@ -287,7 +297,7 @@ INSTALL
 LICENSE
     Most source code should be Free! Code I have lawful authority over is &&
     shall be! Copyright: (c) 2003-2007, Pip Stuart. Copyleft : This software
-    is licensed under the GNU General Public License (version 2). Please
+    is licensed under the GNU General Public License (version 3). Please
     consult the Free Software Foundation (HTTP://FSF.Org) for important
     information about your freedom.
 
