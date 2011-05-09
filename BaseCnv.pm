@@ -1,4 +1,4 @@
-# 3159mLT: Math::BaseCnv.pm created by Pip Stuart <Pip@CPAN.Org> to CoNVert between arbitrary number Bases.  I'm totally addicted to bass!
+# 3159mLT: Math::BaseCnv.pm by PipStuart <Pip@CPAN.Org> to CoNVert between arbitrary number Bases. I'm totally addicted to bass!
 package Math::BaseCnv;
 require Exporter;
 use strict;
@@ -14,7 +14,7 @@ our %EXPORT_TAGS = ( 'all' =>[ qw(cnv dec hex b10 b64 b64sort dig diginit summ f
                      'b64' =>[ qw(cnv         b10 b64 b64sort            ) ],
                      'dig' =>[ qw(                            dig diginit) ],
                      'sfc' =>[ qw(                         summ fact choo) ] );
-our $VERSION     = '1.6.A6FGHKE'; our $PTVR = $VERSION; $PTVR =~ s/^\d+\.\d+\.//; # Please see `perldoc Time::PT` for an explanation of $PTVR.
+our $VERSION     = '1.8.B59BrZX'; our $PTVR = $VERSION; $PTVR =~ s/^\d+\.\d+\.//; # Please see `perldoc Time::PT` for an explanation of $PTVR.
 my $d2bs = ''; my %bs2d = (); my $nega = '';
 my %digsets = (
   'usr' => [], # this will be assigned if a dig(\@newd) call is made
@@ -27,7 +27,7 @@ my %digsets = (
   'b64' => ['0'..'9', 'A'..'Z', 'a'..'z', '.', '_'], # month:C:12 day:V:31
   'm64' => ['A'..'Z', 'a'..'z', '0'..'9', '+', '/'], # 0-63 from MIME::Base64
   'iru' => ['A'..'Z', 'a'..'z', '0'..'9', '[', ']'], # P10 server-server protocol used by IRCu daemon
-  'url' => ['A'..'Z', 'a'..'z', '0'..'9', '*', '-'], # URL style which avoids %2B && %2F expansions of '+' && '/' respectively
+  'url' => ['A'..'Z', 'a'..'z', '0'..'9', '-', '_'], # MIME::Base64::URLSafe which avoids %2B && %2F expansions of '+' && '/' respectively
   'rex' => ['A'..'Z', 'a'..'z', '0'..'9', '!', '-'], # Regular EXpression variant
   'id0' => ['A'..'Z', 'a'..'z', '0'..'9', '_', '-'], # IDentifier style 0
   'id1' => ['A'..'Z', 'a'..'z', '0'..'9', '.', '_'], # IDentifier style 1
@@ -103,7 +103,7 @@ Math::BaseCnv - fast functions to CoNVert between number Bases
 
 =head1 VERSION
 
-This documentation refers to version 1.6.A6FGHKE of Math::BaseCnv, which was released on Tue Jun 15 16:17:20:14 2010.
+This documentation refers to version 1.8.B59BrZX of Math::BaseCnv, which was released on Mon May  9 11:53:35:33 2011.
 
 =head1 SYNOPSIS
 
@@ -119,15 +119,15 @@ This documentation refers to version 1.6.A6FGHKE of Math::BaseCnv, which was rel
 
 =head1 DESCRIPTION
 
-BaseCnv provides a few simple functions for converting between arbitrary number bases.  It is as fast as I currently know how to make it (of course
-relying only on the lovely Perl).  If you would rather utilize an object syntax for number-base conversion, please see Ken Williams's
+BaseCnv provides a few simple functions for converting between arbitrary number bases. It is as fast as I currently know how to make it (of course
+relying only on the lovely Perl). If you would rather utilize an object syntax for number-base conversion, please see Ken Williams'
 <Ken@Forum.Swarthmore.Edu> fine L<Math::BaseCalc> module.
 
 =head1 PURPOSE
 
-The reason I created BaseCnv was that I needed a simple way to convert quickly between the 3 number bases I use most (10, 16, && 64).  It turned out
-that it was trivial to handle any arbitrary number base that is represented as characters.  High-bit ASCII has proven somewhat problemmatic but at least
-BaseCnv can simply && realiably convert between any possible base between 2 && 64 (or 85).  I'm happy with it && employ b64() in places I probably
+The reason I created BaseCnv was that I needed a simple way to convert quickly between the 3 number bases I use most (10, 16, && 64). It turned out
+that it was trivial to handle any arbitrary number base that is represented as characters. High-bit ASCII has proven somewhat problemmatic but at least
+BaseCnv can simply && realiably convert between any possible base between 2 && 64 (or 85). I'm happy with it && employ b64() in places I probably
 shouldn't now =).
 
 =head1 USAGE
@@ -150,7 +150,7 @@ B<When all three parameters are provided:>
 
 The normal (&& most clear) usage of cnv() is to provide all three parameters where $numb is converted from $from base to $tobs.
 
-cnv() is the only function that is exported from a normal 'use Math::BaseCnv;' command.  The other functions below can be imported to local namespaces
+cnv() is the only function that is exported from a normal 'use Math::BaseCnv;' command. The other functions below can be imported to local namespaces
 explicitly or with the following tags:
 
   :all - every function described here
@@ -183,7 +183,7 @@ Please read the L<"NOTES"> regarding hex().
 
 =head2 dig(\@newd)
 
-Assign the new digit character list to be used in place of the default one.  dig() can also alternately accept a string name matching one of the
+Assign the new digit character list to be used in place of the default one. dig() can also alternately accept a string name matching one of the
 following predefined digit sets:
 
   'bin' => ['0', '1']
@@ -195,7 +195,7 @@ following predefined digit sets:
   'b64' => ['0'..'9', 'A'..'Z', 'a'..'z', '.', '_']
   'm64' => ['A'..'Z', 'a'..'z', '0'..'9', '+', '/'] # MIME::Base64
   'iru' => ['A'..'Z', 'a'..'z', '0'..'9', '[', ']'] # IRCu
-  'url' => ['A'..'Z', 'a'..'z', '0'..'9', '*', '-'] # URL
+  'url' => ['A'..'Z', 'a'..'z', '0'..'9', '-', '_'] # MIME::Base64::URLSafe
   'rex' => ['A'..'Z', 'a'..'z', '0'..'9', '!', '-'] # RegEx
   'id0' => ['A'..'Z', 'a'..'z', '0'..'9', '_', '-'] # ID 0
   'id1' => ['A'..'Z', 'a'..'z', '0'..'9', '.', '_'] # ID 1
@@ -206,7 +206,7 @@ following predefined digit sets:
             ';', '<', '=', '>', '?', '@', '^', '_', #   like in
             '`', '{', '|', '}', '~'               ] # Math::Base85
 
-If no \@newd list or digit set name is provided as a parameter, dig() returns the current character list.  It's fine to have many more characters
+If no \@newd list or digit set name is provided as a parameter, dig() returns the current character list. It's fine to have many more characters
 in your current digit set than will be used with your conversions (e.g., using dig('b64') works fine for any cnv() call with $from && $tobs params
 less than or equal to 64).
 
@@ -216,20 +216,20 @@ An example of a \@newd parameter for a specified alternate digit set for base 9 
 
 =head2 diginit()
 
-Resets the used digit list to the initial default order of the predefined digit set: 'b64'.  This is simply a shortcut for calling dig('b64') for
+Resets the used digit list to the initial default order of the predefined digit set: 'b64'. This is simply a shortcut for calling dig('b64') for
 reinitialization purposes.
 
 =head2 summ($numb)
 
-A simple function to calculate a memoized summation of $numb down to 1.
+A simple function to calculate a memoized BigInt summation of $numb down to 1.
 
 =head2 fact($numb)
 
-A simple function to calculate a memoized factorial of $numb.
+A simple function to calculate a memoized BigInt factorial of $numb.
 
 =head2 choo($ennn, $emmm)
 
-A simple function to calculate a memoized function  of $ennn choose $emmm.
+A simple function to calculate a memoized BigInt function  of $ennn choose $emmm.
 
 =head1 NOTES
 
@@ -240,13 +240,13 @@ it makes more sense to me this way && will be easier to remember (I've had to lo
 impetus for this module... as well as the gut reaction that sprintf() is not a proper natural inverse function for hex()).
 
 This means that my b64() function takes a decimal number as a parameter && returns the base64 equivalent (FromBase = 10, ToBase = 64) && my b10()
-function takes a base64 number (string) && returns the decimal value (FromBase = 64, ToBase = 10).  My hex() function overloads Perl's builtin version
-with this opposite behavior so my dec() function behaves like Perl's normal hex() function.  I know it's confusing && maybe bad form of me to do this
+function takes a base64 number (string) && returns the decimal value (FromBase = 64, ToBase = 10). My hex() function overloads Perl's builtin version
+with this opposite behavior so my dec() function behaves like Perl's normal hex() function. I know it's confusing && maybe bad form of me to do this
 but I like it so much better this way that I'd rather go against the grain.
 
-Please think of my dec() && hex() functions as meaning decify && hexify.  Also the pronunciation of dec() is 'dess' (!'deck' which would be the inverse
+Please think of my dec() && hex() functions as meaning decify && hexify. Also the pronunciation of dec() is 'dess' (!'deck' which would be the inverse
 of 'ink' which -- && ++ already do so well). After reading the informative Perl module etiquette guidelines, I now  appreciate the need to export as
-little as is necessary by default. So to be responsible, I have limited BaseCnv exporting to only cnv() under normal circumstances.  Please
+little as is necessary by default. So to be responsible, I have limited BaseCnv exporting to only cnv() under normal circumstances. Please
 specify the other functions you'd like to import into your namespace or use the tags described above in the cnv() section like:
 
   'use Math::BaseCnv qw(:all !:hex);'
@@ -258,10 +258,10 @@ This module does not handle fractional number inputs because I like using the do
 summ(), fact(), && choo() are general Math function utilities which are unrelated to number-base conversion but I didn't feel like making another separate
 module just for them so they snuck in here.
 
-I hope you find Math::BaseCnv useful.  Please feel free to e-mail me any suggestions or coding tips or notes of appreciation ("app-ree-see-ay-shun").
-Thank you.  TTFN.
+I hope you find Math::BaseCnv useful. Please feel free to e-mail me any suggestions or coding tips or notes of appreciation ("app-ree-see-ay-shun").
+Thank you. TTFN.
 
-=head1 2DO
+=head1 2DU
 
 =over 2
 
@@ -278,6 +278,12 @@ Thank you.  TTFN.
 Revision history for Perl extension Math::BaseCnv:
 
 =over 2
+
+=item - 1.8.B59BrZX  Mon May  9 11:53:35:33 2011
+
+* updated 'url' digit set to URLSafe to resolve HTTPS://RT.CPAN.Org/Ticket/Display.html?id=60125
+
+* updated license copyright years (already had GPLv3)
 
 =item - 1.6.A6FGHKE  Tue Jun 15 16:17:20:14 2010
 
@@ -411,9 +417,9 @@ or uncompress the package && run:
 
 =head1 LICENSE
 
-Most source code should be Free!  Code I have lawful authority over is && shall be!
-Copyright: (c) 2003-2007, Pip Stuart.
-Copyleft :  This software is licensed under the GNU General Public License (version 3).  Please consult the Free Software Foundation (HTTP://FSF.Org)
+Most source code should be Free! Code I have lawful authority over is && shall be!
+Copyright:(c) 2003-2011, Pip Stuart.
+Copyleft : This software is licensed under the GNU General Public License (version 3). Please consult the Free Software Foundation (HTTP://FSF.Org)
   for important information about your freedom.
 
 =head1 AUTHOR

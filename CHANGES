@@ -1,6 +1,12 @@
 CHANGES
     Revision history for Perl extension Math::BaseCnv:
 
+    - 1.8.B59BrZX Mon May 9 11:53:35:33 2011
+      * updated 'url' digit set to URLSafe to resolve
+      HTTPS://RT.CPAN.Org/Ticket/Display.html?id=60125
+
+      * updated license copyright years (already had GPLv3)
+
     - 1.6.A6FGHKE Tue Jun 15 16:17:20:14 2010
       * bumped minor version number so they'll keep ascending (without PT
       comprehension)

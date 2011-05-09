@@ -1,6 +1,9 @@
+NAME
+    Math::BaseCnv - fast functions to CoNVert between number Bases
+
 VERSION
-    This documentation refers to version 1.6.A6FGHKE of Math::BaseCnv, which
-    was released on Tue Jun 15 16:17:20:14 2010.
+    This documentation refers to version 1.8.B59BrZX of Math::BaseCnv, which
+    was released on Mon May 9 11:53:35:33 2011.
 
 SYNOPSIS
       use Math::BaseCnv;
@@ -17,7 +20,7 @@ DESCRIPTION
     BaseCnv provides a few simple functions for converting between arbitrary
     number bases. It is as fast as I currently know how to make it (of
     course relying only on the lovely Perl). If you would rather utilize an
-    object syntax for number-base conversion, please see Ken Williams's
+    object syntax for number-base conversion, please see Ken Williams'
     <Ken@Forum.Swarthmore.Edu> fine Math::BaseCalc module.
 
 PURPOSE
@@ -97,7 +100,7 @@ USAGE
       'b64' => ['0'..'9', 'A'..'Z', 'a'..'z', '.', '_']
       'm64' => ['A'..'Z', 'a'..'z', '0'..'9', '+', '/'] # MIME::Base64
       'iru' => ['A'..'Z', 'a'..'z', '0'..'9', '[', ']'] # IRCu
-      'url' => ['A'..'Z', 'a'..'z', '0'..'9', '*', '-'] # URL
+      'url' => ['A'..'Z', 'a'..'z', '0'..'9', '-', '_'] # MIME::Base64::URLSafe
       'rex' => ['A'..'Z', 'a'..'z', '0'..'9', '!', '-'] # RegEx
       'id0' => ['A'..'Z', 'a'..'z', '0'..'9', '_', '-'] # ID 0
       'id1' => ['A'..'Z', 'a'..'z', '0'..'9', '.', '_'] # ID 1
@@ -125,14 +128,15 @@ USAGE
     dig('b64') for reinitialization purposes.
 
   summ($numb)
-    A simple function to calculate a memoized summation of $numb down to 1.
+    A simple function to calculate a memoized BigInt summation of $numb down
+    to 1.
 
   fact($numb)
-    A simple function to calculate a memoized factorial of $numb.
+    A simple function to calculate a memoized BigInt factorial of $numb.
 
   choo($ennn, $emmm)
-    A simple function to calculate a memoized function of $ennn choose
-    $emmm.
+    A simple function to calculate a memoized BigInt function of $ennn
+    choose $emmm.
 
 NOTES
     The Perl builtin hex() function takes a hex string as a parameter &&
@@ -181,7 +185,7 @@ NOTES
     suggestions or coding tips or notes of appreciation
     ("app-ree-see-ay-shun"). Thank you. TTFN.
 
-2DO
+2DU
     - better error checking
     - handle fractional parts? umm but I like using '.' as a b64 char so ','
     comma or some other separator?
@@ -189,6 +193,12 @@ NOTES
 
 CHANGES
     Revision history for Perl extension Math::BaseCnv:
+
+    - 1.8.B59BrZX Mon May 9 11:53:35:33 2011
+      * updated 'url' digit set to URLSafe to resolve
+      HTTPS://RT.CPAN.Org/Ticket/Display.html?id=60125
+
+      * updated license copyright years (already had GPLv3)
 
     - 1.6.A6FGHKE Tue Jun 15 16:17:20:14 2010
       * bumped minor version number so they'll keep ascending (without PT
@@ -300,7 +310,7 @@ INSTALL
 
 LICENSE
     Most source code should be Free! Code I have lawful authority over is &&
-    shall be! Copyright: (c) 2003-2007, Pip Stuart. Copyleft : This software
+    shall be! Copyright:(c) 2003-2011, Pip Stuart. Copyleft : This software
     is licensed under the GNU General Public License (version 3). Please
     consult the Free Software Foundation (HTTP://FSF.Org) for important
     information about your freedom.
